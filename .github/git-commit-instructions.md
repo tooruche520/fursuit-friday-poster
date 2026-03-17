@@ -1,0 +1,8 @@
+- 使用 zh_tw 撰寫
+- 使用 conventional commits 撰寫有意義的 commit message
+- 所有 commit message 遵循格式：type(scope): description
+- 在專案中使用一致的 type（feat, fix, docs, style, refactor, test, chore）
+- 避免過度冗長的描述或不必要的細節
+- 以不超過 50 個字的命令式短句開頭
+- 短句後留一行空白，再補充 2~10 句較詳細的說明，有需要請自行增減說明句數以完整描述修改內容
+- 詳細說明需使用項目符號（bullet points）整理
