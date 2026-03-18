@@ -6,7 +6,8 @@ const { contacts, upsertContact, deleteContact } = useContacts()
 const { getPlatform } = usePlatforms()
 
 const editingContact = ref<Contact | null>(null)
-const deletingId = ref<string | null>(null)
+const deleteTargetId = ref<string | null>(null)
+const isDeleteDialogOpen = ref(false)
 
 const saveContact = () => {
   if (!editingContact.value) return
@@ -21,10 +22,18 @@ const saveContact = () => {
   toast.success('聯絡人已儲存')
 }
 
-const handleDeleteContact = (id: string) => {
-  deleteContact(id)
-  deletingId.value = null
-  toast.success('聯絡人已刪除')
+const confirmDelete = () => {
+  if (deleteTargetId.value) {
+    deleteContact(deleteTargetId.value)
+    toast.success('聯絡人已刪除')
+  }
+  isDeleteDialogOpen.value = false
+  deleteTargetId.value = null
+}
+
+const openDeleteDialog = (id: string) => {
+  deleteTargetId.value = id
+  isDeleteDialogOpen.value = true
 }
 
 const startEdit = (contact: Contact) => {
@@ -117,35 +126,21 @@ const createNew = () => {
               </TableCell>
               
               <TableCell class="text-right">
-                <div v-if="deletingId === contact.id" class="flex justify-end items-center gap-2">
-                  <span class="text-xs text-slate-500">確定刪除？</span>
-                  <Button variant="ghost" size="sm" @click="deletingId = null">取消</Button>
-                  <Button
-                    variant="destructive"
-                    size="sm"
-                    class="bg-red-500 hover:bg-red-600"
-                    @click="handleDeleteContact(contact.id)"
-                  >
-                    確認
-                  </Button>
-                </div>
-                <div v-else>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    @click="startEdit(contact)"
-                  >
-                    <Icon name="lucide:pencil" class="w-4 h-4" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    class="text-red-500 hover:text-red-600 hover:bg-red-50"
-                    @click="deletingId = contact.id"
-                  >
-                    <Icon name="lucide:trash-2" class="w-4 h-4" />
-                  </Button>
-                </div>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  @click="startEdit(contact)"
+                >
+                  <Icon name="lucide:pencil" class="w-4 h-4" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  class="text-red-500 hover:text-red-600 hover:bg-red-50"
+                  @click="openDeleteDialog(contact.id)"
+                >
+                  <Icon name="lucide:trash-2" class="w-4 h-4" />
+                </Button>
               </TableCell>
             </TableRow>
           </TableBody>
@@ -160,5 +155,25 @@ const createNew = () => {
       :show-autocomplete="false"
       @confirm="saveContact"
     />
+
+    <AlertDialog v-model:open="isDeleteDialogOpen">
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>確認刪除</AlertDialogTitle>
+          <AlertDialogDescription>
+            確定要刪除這位夥伴嗎？此操作無法復原。
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>取消</AlertDialogCancel>
+          <AlertDialogAction
+            class="bg-red-500 hover:bg-red-600"
+            @click="confirmDelete"
+          >
+            確認刪除
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   </div>
 </template>

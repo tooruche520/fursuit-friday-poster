@@ -20,6 +20,7 @@
           <TabsList>
             <TabsTrigger value="generator"> 編輯貼文 </TabsTrigger>
             <TabsTrigger value="contacts"> 通訊錄管理 </TabsTrigger>
+            <TabsTrigger value="styles"> 風格管理 </TabsTrigger>
           </TabsList>
         </div>
       </header>
@@ -31,6 +32,9 @@
         </TabsContent>
         <TabsContent value="contacts">
           <ContactsView />
+        </TabsContent>
+        <TabsContent value="styles">
+          <StylesView />
         </TabsContent>
       </main>
     </Tabs>

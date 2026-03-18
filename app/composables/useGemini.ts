@@ -1,0 +1,66 @@
+import { GoogleGenerativeAI } from '@google/generative-ai'
+
+export function useGemini() {
+  const config = useRuntimeConfig()
+  
+  const generateCaption = async (options: {
+    stylePrompt?: string
+    imageBase64?: string
+    imageType?: string
+  }) => {
+    try {
+      const apiKey = config.public.geminiApiKey as string
+      if (!apiKey) {
+        throw new Error('Gemini API Key 未設定')
+      }
+
+      const genAI = new GoogleGenerativeAI(apiKey)
+      const model = genAI.getGenerativeModel({ model: 'gemini-3-flash-preview' })
+
+      // 建構提示詞
+      let prompt = '請根據這張 fursuit 照片生成一段適合社群媒體的貼文內容。'
+      
+      if (options.stylePrompt) {
+        prompt += `\n\n風格要求: ${options.stylePrompt}`
+      }
+      
+      prompt += '\n\n請使用繁體中文，語氣輕鬆自然，約 50-100 字。只回傳貼文內容，不要有其他說明。'
+
+      let result
+      if (options.imageBase64 && options.imageType) {
+        // 有圖片時使用 Vision 模式
+        result = await model.generateContent([
+          prompt,
+          {
+            inlineData: {
+              data: options.imageBase64,
+              mimeType: options.imageType
+            }
+          }
+        ])
+      } else {
+        // 沒有圖片時僅用文字提示
+        result = await model.generateContent(prompt)
+      }
+
+      const response = await result.response
+      const text = response.text()
+      
+      return {
+        success: true,
+        text: text.trim()
+      }
+    } catch (error) {
+      const err = error as Error
+      console.error('Gemini API 錯誤:', err)
+      return {
+        success: false,
+        error: err.message || '生成失敗，請稍後再試'
+      }
+    }
+  }
+
+  return {
+    generateCaption
+  }
+}

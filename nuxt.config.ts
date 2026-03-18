@@ -7,13 +7,20 @@ export default defineNuxtConfig({
     port: 14514,
   },
 
+  runtimeConfig: {
+    public: {
+      geminiApiKey: ''
+    }
+  },
+
   modules: [
     '@nuxt/eslint',
     '@nuxt/icon',
     '@nuxt/image',
     '@nuxt/fonts',
     '@nuxtjs/tailwindcss',
-    'shadcn-nuxt'
+    'shadcn-nuxt',
+    '@vueuse/nuxt',
   ],
 
   shadcn: {
