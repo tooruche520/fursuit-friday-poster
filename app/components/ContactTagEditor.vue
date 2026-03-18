@@ -1,0 +1,116 @@
+<script setup lang="ts">
+import type { Contact, Tag, Platform } from '~/types'
+
+interface Props {
+  modelValue: Contact | Tag | null
+  title?: string
+  confirmText?: string
+  showAutocomplete?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  title: '編輯資料',
+  confirmText: '確認',
+  showAutocomplete: true
+})
+
+const emit = defineEmits<{
+  'update:modelValue': [value: Contact | Tag | null]
+  confirm: [value: Contact | Tag]
+  cancel: []
+}>()
+
+const { contacts } = useContacts()
+
+const localData = computed({
+  get: () => props.modelValue,
+  set: (val) => emit('update:modelValue', val)
+})
+
+const isOpen = computed({
+  get: () => !!props.modelValue,
+  set: (val) => {
+    if (!val) {
+      emit('update:modelValue', null)
+      emit('cancel')
+    }
+  }
+})
+
+const handleConfirm = () => {
+  if (localData.value) {
+    emit('confirm', localData.value)
+  }
+}
+
+const handleCancel = () => {
+  emit('update:modelValue', null)
+  emit('cancel')
+}
+</script>
+
+<template>
+  <Dialog v-model:open="isOpen">
+    <DialogContent class="max-w-2xl max-h-[90vh] flex flex-col">
+      <DialogHeader>
+        <DialogTitle class="flex items-center gap-2">
+          <Icon name="lucide:user-plus" class="w-5 h-5 text-primary" />
+          {{ title }}
+        </DialogTitle>
+      </DialogHeader>
+      
+      <div v-if="localData" class="flex-1 overflow-auto space-y-6 p-1">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <Label class="mb-2 block">角色定位</Label>
+            <Select v-model="localData.role">
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="📸 攝影">📸 攝影</SelectItem>
+                <SelectItem value="✂️ 毛裝工作室">✂️ 毛裝工作室</SelectItem>
+                <SelectItem value="🐾 搭檔">🐾 搭檔</SelectItem>
+                <SelectItem value="💖 特別感謝">💖 特別感謝</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          
+          <div>
+            <Label class="mb-2 text-primary flex items-center gap-1">
+              顯示名稱 (支援搜尋)
+              <Icon v-if="showAutocomplete" name="lucide:sparkles" class="w-3 h-3" />
+            </Label>
+            <TagNameAutocomplete
+              v-if="showAutocomplete"
+              :name="localData.name"
+              :contacts="contacts"
+              @update="(fields) => localData && Object.assign(localData, fields)"
+            />
+            <Input
+              v-else
+              v-model="localData.name"
+              placeholder="例如: 阿白"
+            />
+          </div>
+        </div>
+        
+        <div>
+          <Label class="mb-3 block text-base border-b pb-2">社群平台設定</Label>
+          <PlatformListEditor
+            :platforms="localData.platforms"
+            @update="(platforms) => localData!.platforms = platforms"
+          />
+        </div>
+      </div>
+      
+      <DialogFooter>
+        <Button variant="ghost" @click="handleCancel">取消</Button>
+        <Button class="bg-primary text-primary-foreground hover:bg-primary/90 gap-2" @click="handleConfirm">
+          <Icon name="lucide:check" class="w-4 h-4" />
+          {{ confirmText }}
+        </Button>
+      </DialogFooter>
+    </DialogContent>
+  </Dialog>
+</template>
