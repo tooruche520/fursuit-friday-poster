@@ -11,10 +11,20 @@ const emit = defineEmits<{
 
 const { platforms: platformDefs, getPlatform } = usePlatforms()
 
+// 檢查某個平台類型是否已被其他項目使用
+const isPlatformUsed = (platformType: string, currentId: string) => {
+  return props.platforms.some(p => p.id !== currentId && p.type === platformType)
+}
+
 const addPlatform = () => {
+  // 找出第一個尚未使用的平台類型
+  const usedTypes = props.platforms.map(p => p.type)
+  const availablePlatform = platformDefs.find(pDef => !usedTypes.includes(pDef.id as Platform['type']))
+  const defaultType = availablePlatform?.id || 'custom'
+  
   const newPlatforms = [...props.platforms, {
     id: Math.random().toString(36).substr(2, 9),
-    type: 'twitter' as const,
+    type: defaultType as Platform['type'],
     handle: '',
     customName: ''
   }]
@@ -47,14 +57,18 @@ const removePlatform = (id: string) => {
           :model-value="platform.type"
           @update:model-value="(val) => updatePlatform(platform.id, 'type', String(val))"
         >
-          <SelectTrigger class="h-9 text-xs">
-            <SelectValue />
+          <SelectTrigger class="h-9 text-xs w-full">
+            <div class="flex items-center gap-2">
+              <Icon :name="getPlatform(platform.type).icon" class="w-3.5 h-3.5" />
+              <span>{{ getPlatform(platform.type).name }}</span>
+            </div>
           </SelectTrigger>
           <SelectContent>
             <SelectItem
               v-for="pDef in platformDefs"
               :key="pDef.id"
               :value="pDef.id"
+              :disabled="isPlatformUsed(pDef.id, platform.id)"
             >
               <div class="flex items-center gap-2">
                 <Icon :name="pDef.icon" class="w-3.5 h-3.5" />
@@ -93,7 +107,7 @@ const removePlatform = (id: string) => {
           class="h-9 w-9 text-red-500 hover:text-red-600 hover:bg-red-50"
           @click="removePlatform(platform.id)"
         >
-          <Icon name="lucide:x" class="w-4 h-4" />
+          <Icon name="lucide:trash-2" class="w-4 h-4" />
         </Button>
       </div>
     </div>

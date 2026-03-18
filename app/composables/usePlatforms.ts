@@ -3,11 +3,11 @@ import type { PlatformDefinition } from '~/types'
 export function usePlatforms() {
   const platforms: PlatformDefinition[] = [
     { id: 'twitter', name: 'X (Twitter)', icon: 'lucide:twitter' },
-    { id: 'ig', name: 'Instagram', icon: 'lucide:instagram' },
-    { id: 'bsky', name: 'Bluesky', icon: 'lucide:cloud' },
-    { id: 'threads', name: 'Threads', icon: 'lucide:at-sign' },
     { id: 'plurk', name: 'Plurk', icon: 'lucide:message-circle' },
     { id: 'facebook', name: 'Facebook', icon: 'lucide:facebook' },
+    { id: 'bsky', name: 'Bluesky', icon: 'lucide:cloud' },
+    { id: 'ig', name: 'Instagram', icon: 'lucide:instagram' },
+    { id: 'threads', name: 'Threads', icon: 'lucide:at-sign' },
     { id: 'custom', name: '自訂', icon: 'lucide:globe' },
   ]
 
