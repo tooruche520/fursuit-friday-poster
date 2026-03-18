@@ -63,14 +63,14 @@ const createNew = () => {
       </Button>
     </div>
 
-    <Card class="overflow-hidden shadow-sm">
+    <div class="border rounded-md bg-background">
       <div class="overflow-x-auto">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead class="w-1/4">名稱 / 預設定位</TableHead>
-              <TableHead class="w-1/2">已綁定社群帳號</TableHead>
-              <TableHead class="w-1/4 text-right">操作</TableHead>
+              <TableHead class="w-1/4 pl-3 text-muted-foreground">名稱 / 預設定位</TableHead>
+              <TableHead class="w-1/2 text-muted-foreground">已綁定社群帳號</TableHead>
+              <TableHead class="w-1/4 pr-3 text-right text-muted-foreground">操作</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -87,19 +87,23 @@ const createNew = () => {
               :key="contact.id"
               class="hover:bg-slate-50/80 transition-colors"
             >
-              <TableCell>
-                <div class="font-medium text-slate-900 text-base">{{ contact.name }}</div>
-                <div class="text-xs text-slate-500 mt-1 bg-slate-100 inline-block px-2 py-0.5 rounded-md">
-                  {{ contact.role }}
+              <TableCell class="pl-3">
+                <div class="flex items-center gap-2">
+                  <div class="font-medium text-slate-900 text-base">{{ contact.name }}</div>
+                  <Badge variant="secondary">
+                    {{ contact.role }}
+                  </Badge>
+
                 </div>
               </TableCell>
               
               <TableCell>
                 <div v-if="contact.platforms && contact.platforms.length > 0" class="flex flex-wrap gap-2">
-                  <span
+                  <Badge
                     v-for="platform in contact.platforms"
                     :key="platform.id"
-                    class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white border border-slate-200 text-xs shadow-sm text-slate-600"
+                    variant="outline"
+                    class=""
                   >
                     <Icon :name="getPlatform(platform.type).icon" class="w-3.5 h-3.5" />
                     <span v-if="platform.type === 'custom' && platform.customName" class="font-medium mr-1">
@@ -107,7 +111,7 @@ const createNew = () => {
                     </span>
                     <span v-if="platform.handle">{{ platform.handle }}</span>
                     <span v-else class="text-slate-400 italic">未填寫</span>
-                  </span>
+                  </Badge>
                 </div>
                 <span v-else class="text-slate-400 italic">尚未設定任何帳號</span>
               </TableCell>
@@ -125,21 +129,21 @@ const createNew = () => {
                     確認
                   </Button>
                 </div>
-                <div v-else class="space-x-2">
+                <div v-else>
                   <Button
-                    variant="secondary"
-                    size="sm"
+                    variant="ghost"
+                    size="icon"
                     @click="startEdit(contact)"
                   >
-                    編輯
+                    <Icon name="lucide:pencil" class="w-4 h-4" />
                   </Button>
                   <Button
                     variant="ghost"
-                    size="sm"
+                    size="icon"
                     class="text-red-500 hover:text-red-600 hover:bg-red-50"
                     @click="deletingId = contact.id"
                   >
-                    刪除
+                    <Icon name="lucide:trash-2" class="w-4 h-4" />
                   </Button>
                 </div>
               </TableCell>
@@ -147,7 +151,7 @@ const createNew = () => {
           </TableBody>
         </Table>
       </div>
-    </Card>
+    </div>
 
     <ContactTagEditor
       v-model="editingContact"

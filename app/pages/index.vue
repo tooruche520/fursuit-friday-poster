@@ -2,17 +2,17 @@
 </script>
 
 <template>
-  <div class="min-h-screen bg-slate-50 font-sans text-slate-900 pb-12">
+  <div class="min-h-screen bg-background font-sans text-slate-900 pb-12">
     <Tabs default-value="generator" >
       <!-- Header -->
       <header
-        class="bg-white border-b border-slate-200 sticky top-0 z-40 mb-4 shadow-sm"
+        class="bg-white border-b border-slate-200 sticky top-0 z-40 mb-4 "
       >
         <div
-          class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between"
+          class="max-w-7xl mx-auto px-4 h-12 flex items-center justify-between"
         >
           <h1
-            class="text-xl font-bold tracking-tight text-slate-900 flex items-center gap-2"
+            class="text-lg font-bold tracking-tight text-slate-900 flex items-center gap-2"
           >
             🐾 FursuitFriday 發文神器
           </h1>
