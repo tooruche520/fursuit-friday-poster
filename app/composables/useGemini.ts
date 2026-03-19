@@ -6,6 +6,7 @@ export function useGemini() {
   
   const generateCaption = async (options: {
     stylePrompt?: string
+    additionalPrompt?: string
     imageBase64?: string
     imageType?: string
   }) => {
@@ -26,7 +27,11 @@ export function useGemini() {
         prompt += `\n\n風格要求: ${options.stylePrompt}`
       }
       
-      prompt += '\n\n請使用繁體中文，語氣輕鬆自然，約 50-100 字。只回傳貼文內容，不要有其他說明。'
+      if (options.additionalPrompt) {
+        prompt += `\n\n補充資訊: ${options.additionalPrompt}`
+      }
+      
+      prompt += '\n\n請使用繁體中文，語氣輕鬆自然，約 50-100 字。只回傳貼文內容，不要有其他說明。不要有hashtag。'
 
       let result
       if (options.imageBase64 && options.imageType) {

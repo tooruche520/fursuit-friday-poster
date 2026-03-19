@@ -18,6 +18,10 @@ const { styles } = useStyles();
 // 風格選擇
 const selectedStyle = ref<string | null>(null);
 
+// 臨時指令
+const additionalPrompt = ref<string>("");
+const showAdditionalPrompt = ref<boolean>(false);
+
 // 狀態管理
 const imageFile = ref<File | null>(null);
 const imagePreview = ref<string>("");
@@ -112,6 +116,7 @@ const handleGenerateAI = async () => {
     // 調用 Gemini API
     const result = await generateCaption({
       stylePrompt: getSelectedStylePrompt(),
+      additionalPrompt: additionalPrompt.value.trim() || undefined,
       imageBase64,
       imageType: imageFile.value.type,
     });
@@ -351,6 +356,32 @@ const createNewTag = () => {
               <Icon name="lucide:plus" class="w-3 h-3" />
               自定義
             </Badge>
+          </div>
+
+          <!-- 臨時指令（可摺疊） -->
+          <div class="space-y-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              class="w-full justify-start gap-2 text-slate-600 hover:text-slate-900 h-8"
+              @click="showAdditionalPrompt = !showAdditionalPrompt"
+            >
+              <Icon
+                :name="showAdditionalPrompt ? 'lucide:chevron-down' : 'lucide:chevron-right'"
+                class="w-4 h-4"
+              />
+              <Icon name="lucide:message-square-plus" class="w-4 h-4" />
+              <span class="text-sm">臨時指令</span>
+              <span class="text-xs text-slate-400">
+                {{ additionalPrompt ? '(已填寫)' : '(選填，用於補充照片描述)' }}
+              </span>
+            </Button>
+            <Textarea
+              v-if="showAdditionalPrompt"
+              v-model="additionalPrompt"
+              placeholder="例如：這張照片是在戶外拍攝的、獸裝上有特殊配件、想要強調的重點等..."
+              class="min-h-20 resize-y text-sm animate-in fade-in slide-in-from-top-2 duration-200"
+            />
           </div>
 
           <Button
