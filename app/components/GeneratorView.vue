@@ -208,29 +208,28 @@ const saveTag = () => {
     return;
   }
 
-  // 檢查是否存在於通訊錄，不存在則自動加入
-  const existingContact = contacts.value.find(
-    (c: Contact) => c.name === editingTag.value!.name,
-  );
-  if (!existingContact) {
-    upsertContact({
-      id: Math.random().toString(36).substr(2, 9),
-      name: editingTag.value.name,
-      role: editingTag.value.role,
-      platforms: JSON.parse(JSON.stringify(editingTag.value.platforms)),
-    });
-  }
+  // 同步更新到通訊錄（新增或更新）
+  upsertContact({
+    // 如果 editingTag 有 id，就用它（可能是從通訊錄選的或編輯的）
+    // 如果沒有 id，就生成新的（全新的標記）
+    id: editingTag.value.id || Math.random().toString(36).substr(2, 9),
+    name: editingTag.value.name,
+    role: editingTag.value.role,
+    platforms: JSON.parse(JSON.stringify(editingTag.value.platforms)),
+  });
 
-  // 更新或新增標記
-  if (editingTag.value.id) {
+  // 更新或新增標記到本次貼文的標記列表
+  if (tags.value.some(t => t.id === editingTag.value!.id)) {
+    // 已存在，更新
     const index = tags.value.findIndex((t) => t.id === editingTag.value!.id);
     if (index >= 0) {
       tags.value[index] = { ...editingTag.value };
     }
   } else {
+    // 不存在，新增（確保有 id）
     tags.value.push({
       ...editingTag.value,
-      id: Math.random().toString(36).substr(2, 9),
+      id: editingTag.value.id || Math.random().toString(36).substr(2, 9),
     });
   }
 

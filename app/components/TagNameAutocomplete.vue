@@ -8,7 +8,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  update: [fields: { name?: string, role?: string, platforms?: Platform[] }]
+  update: [fields: { id?: string, name?: string, role?: string, platforms?: Platform[] }]
 }>()
 
 const isOpen = ref(false)
@@ -39,6 +39,7 @@ const handleInput = (value: string | number) => {
 
 const selectContact = (contact: Contact) => {
   emit('update', {
+    id: contact.id,  // 傳遞 id，讓 Tag.id 等於 Contact.id
     name: contact.name,
     role: contact.role,
     platforms: JSON.parse(JSON.stringify(contact.platforms))
