@@ -230,7 +230,7 @@ const createNewTag = () => {
 </script>
 
 <template>
-  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-7xl mx-auto animate-in fade-in duration-300">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 max-w-7xl mx-auto animate-in fade-in duration-300">
     <!-- 左側操作區 -->
     <div class="lg:col-span-7 space-y-6">
       <!-- 1. AI 文案生成 -->
@@ -406,10 +406,10 @@ const createNewTag = () => {
 
     <!-- 右側預覽區 -->
     <div class="lg:col-span-5 relative">
-      <div class="sticky top-20 space-y-4">
+      <div class="sticky top-16 space-y-4">
         <Card class="overflow-hidden shadow-md pt-0 gap-0">
           <CardContent class="p-2">
-            <Tabs v-model="activePlatform" class="w-full">
+            <Tabs v-model="activePlatform" class="w-full gap-0">
               <TabsList class="w-full bg-background grid grid-cols-5">
                 <TabsTrigger value="twitter" class="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground flex items-center justify-center gap-1 text-xs">
                   <Icon name="lucide:twitter" class="w-4 h-4" />
