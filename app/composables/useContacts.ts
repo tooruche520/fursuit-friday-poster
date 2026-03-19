@@ -6,6 +6,15 @@ export function useContacts() {
 
   // 新增或更新聯絡人
   const upsertContact = (contact: Contact) => {
+    const { syncCustomPlatform } = usePlatforms()
+    
+    // 同步所有自訂平台到平台列表
+    contact.platforms.forEach(platform => {
+      if (platform.type === 'custom' && platform.customName) {
+        syncCustomPlatform(platform.customName)
+      }
+    })
+    
     const index = contacts.value.findIndex(c => c.id === contact.id)
     if (index >= 0) {
       contacts.value[index] = contact
