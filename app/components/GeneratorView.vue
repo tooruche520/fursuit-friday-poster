@@ -234,7 +234,7 @@ const createNewTag = () => {
     <!-- 左側操作區 -->
     <div class="lg:col-span-7 space-y-6">
       <!-- 1. AI 文案生成 -->
-      <Card class="p-6 shadow-sm">
+      <Card class="p-6 shadow-none rounded-md">
         <div class="flex items-center gap-3">
           <Icon name="lucide:message-square" class="w-5 h-5 text-primary" />
           <h2 class="text-lg font-semibold">1. AI 文案生成</h2>
@@ -321,7 +321,7 @@ const createNewTag = () => {
       </Card>
 
       <!-- 2. 標記者 -->
-      <Card class="p-6 shadow-sm">
+      <Card class="p-6 shadow-none rounded-md">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-3">
             <Icon name="lucide:users" class="w-5 h-5 text-primary" />
@@ -395,7 +395,7 @@ const createNewTag = () => {
       </Card>
 
       <!-- 3. 排版與 Hashtags -->
-      <Card class="p-6 shadow-sm">
+      <Card class="p-6 shadow-none rounded-md">
         <div class="flex items-center gap-3">
           <Icon name="lucide:hash" class="w-5 h-5 text-primary" />
           <h2 class="text-lg font-semibold">3. Hashtags</h2>
@@ -407,27 +407,27 @@ const createNewTag = () => {
     <!-- 右側預覽區 -->
     <div class="lg:col-span-5 relative">
       <div class="sticky top-16 space-y-4">
-        <Card class="overflow-hidden shadow-md pt-0 gap-0">
+        <Card class="overflow-hidden shadow-none rounded-md pt-0 gap-0">
           <CardContent class="p-2">
             <Tabs v-model="activePlatform" class="w-full gap-0">
               <TabsList class="w-full bg-background grid grid-cols-5">
-                <TabsTrigger value="twitter" class="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground flex items-center justify-center gap-1 text-xs">
+                <TabsTrigger value="twitter" class="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded flex items-center justify-center gap-1 text-xs">
                   <Icon name="lucide:twitter" class="w-4 h-4" />
                   <span class="hidden sm:inline">X</span>
                 </TabsTrigger>
-                <TabsTrigger value="ig" class="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground flex items-center justify-center gap-1 text-xs">
+                <TabsTrigger value="ig" class="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded flex items-center justify-center gap-1 text-xs">
                   <Icon name="lucide:instagram" class="w-4 h-4" />
                   <span class="hidden sm:inline">IG</span>
                 </TabsTrigger>
-                <TabsTrigger value="bsky" class="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground flex items-center justify-center gap-1 text-xs">
+                <TabsTrigger value="bsky" class="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded flex items-center justify-center gap-1 text-xs">
                   <Icon name="lucide:cloud" class="w-4 h-4" />
                   <span class="hidden sm:inline">Bsky</span>
                 </TabsTrigger>
-                <TabsTrigger value="threads" class="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground flex items-center justify-center gap-1 text-xs">
+                <TabsTrigger value="threads" class="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded flex items-center justify-center gap-1 text-xs">
                   <Icon name="lucide:at-sign" class="w-4 h-4" />
                   <span class="hidden sm:inline">Threads</span>
                 </TabsTrigger>
-                <TabsTrigger value="plurk" class="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground flex items-center justify-center gap-1 text-xs">
+                <TabsTrigger value="plurk" class="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded flex items-center justify-center gap-1 text-xs">
                   <Icon name="lucide:message-circle" class="w-4 h-4" />
                   <span class="hidden sm:inline">Plurk</span>
                 </TabsTrigger>

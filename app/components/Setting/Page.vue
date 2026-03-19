@@ -1,21 +1,12 @@
 <script setup lang="ts">
 import { useSidebar } from '@/components/ui/sidebar'
-const {
-  state,
-  open,
-  setOpen,
-  openMobile,
-  setOpenMobile,
-  isMobile,
-  toggleSidebar,
-} = useSidebar()
+const { setOpenMobile } = useSidebar()
 
 const tabValue = ref("contacts");
 
 const onMenuButtonClick = (value: string) => {
   tabValue.value = value;
   setOpenMobile(false); // 關閉手機端的側邊欄
-  setOpen(false); // 關閉桌面端的側邊欄
 };
 </script>
 
