@@ -2,6 +2,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai'
 
 export function useGemini() {
   const config = useRuntimeConfig()
+  const { getApiKey } = useApiKeys()
   
   const generateCaption = async (options: {
     stylePrompt?: string
@@ -9,9 +10,10 @@ export function useGemini() {
     imageType?: string
   }) => {
     try {
-      const apiKey = config.public.geminiApiKey as string
+      // 優先從 API Keys 管理取得，回退到環境變數
+      const apiKey = getApiKey('gemini') || (config.public.geminiApiKey as string)
       if (!apiKey) {
-        throw new Error('Gemini API Key 未設定')
+        throw new Error('Gemini API Key 未設定，請前往「設定 > API 金鑰」頁面設定')
       }
 
       const genAI = new GoogleGenerativeAI(apiKey)

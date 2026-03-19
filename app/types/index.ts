@@ -24,3 +24,13 @@ export interface PlatformDefinition {
   name: string
   icon: string
 }
+
+export interface ApiKeyConfig {
+  id: string
+  provider: 'gemini' | 'openai' | 'anthropic' | 'custom'
+  name: string
+  key: string
+  enabled: boolean
+  description?: string
+  customEndpoint?: string
+}

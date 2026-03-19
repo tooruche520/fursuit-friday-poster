@@ -34,6 +34,12 @@ const onMenuButtonClick = (value: string) => {
                       通訊錄
                     </SidebarMenuButton>
                   </SidebarMenuItem>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton @click="onMenuButtonClick('apikeys')" :is-active="tabValue === 'apikeys'">
+                      <Icon name="lucide:key" />
+                      API 金鑰
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
                 </SidebarMenu>
               </SidebarGroupContent>
             </SidebarGroup>
@@ -43,14 +49,14 @@ const onMenuButtonClick = (value: string) => {
 
         <div class="flex flex-1">
           <main class="px-4 mt-4 w-full">
-            <TabsContent value="generator">
-              <GeneratorView />
-            </TabsContent>
             <TabsContent value="contacts">
               <ContactsView />
             </TabsContent>
             <TabsContent value="styles">
               <StylesView />
+            </TabsContent>
+            <TabsContent value="apikeys">
+              <ApiKeysView />
             </TabsContent>
           </main>
         </div>
