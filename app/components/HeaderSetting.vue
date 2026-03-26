@@ -1,43 +1,42 @@
 <script setup lang="ts">
 import { useSidebar } from "@/components/ui/sidebar";
-const {
-  state,
-  open,
-  setOpen,
-  openMobile,
-  setOpenMobile,
-  isMobile,
-  toggleSidebar,
-} = useSidebar();
+import ModeToggle from './ModeToggle.vue'
+const { toggleSidebar } = useSidebar();
 </script>
 
 <template>
-  <header class="bg-white border-b border-slate-200 sticky top-0 z-40">
-    <div class="max-w-7xl mx-auto px-4 h-12 flex items-center justify-between">
+  <header class="bg-background border-b sticky top-0 z-40">
+    <div class="mx-auto px-4 h-12 flex items-center justify-between">
       <!-- 右側選單 -->
-      <div class="flex items-center justify-between gap-4">
+      <div class="flex items-center justify-around gap-2">
         <!-- 回上一頁 -->
         <Button
           variant="ghost"
           size="icon"
-          class="size-7 -m-2"
-          @click="$router.back()"
+          class="-ml-2"
+          asChild
         >
-          <Icon name="lucide:arrow-left" />
+          <NuxtLink to="/">
+            <Icon name="lucide:arrow-left" />
+          </NuxtLink>
         </Button>
 
-        <h1 class="font-bold text-slate-900">設定</h1>
+        <h1 class="font-bold text-foreground">設定</h1>
 
         <!-- 開啟關閉菜單 -->
         <Button
           variant="ghost"
           size="icon"
-          class="size-7 -m-2"
+          class=""
           @click="toggleSidebar"
         >
           <Icon name="lucide:menu" />
         </Button>
+
       </div>
+
+      <!-- 左側主題切換 -->
+      <ModeToggle />
     </div>
   </header>
 </template>

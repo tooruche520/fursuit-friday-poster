@@ -21,6 +21,7 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     'shadcn-nuxt',
     '@vueuse/nuxt',
+    '@nuxtjs/color-mode',
   ],
 
   shadcn: {
@@ -36,5 +37,9 @@ export default defineNuxtConfig({
      * @default "@/components/ui"
      */
     componentDir: '@/components/ui'
+  },
+
+  colorMode: {
+    classSuffix: ''
   }
 })

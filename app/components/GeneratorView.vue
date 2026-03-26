@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 const { contacts, upsertContact } = useContacts();
-const { platforms, activePlatform, getPlatform, getPlatformName } = usePlatforms();
+const { platforms, activePlatform, builtInPlatforms, getPlatform, getPlatformName } = usePlatforms();
 const { roles } = useRoles();
 const { copy } = useCopyToClipboard();
 const { generateCaption } = useGemini();
@@ -290,12 +290,7 @@ const createNewTag = () => {
             />
             <label
               for="image-upload"
-              class="block border-2 border-dashed rounded-xl p-8 cursor-pointer transition-colors overflow-hidden"
-              :class="
-                imageUploaded
-                  ? 'border-primary bg-primary/5'
-                  : 'border-slate-300 hover:bg-slate-50 bg-white'
-              "
+              class="block border-2 border-dashed rounded-xl p-8 cursor-pointer transition-colors overflow-hidden border-primary/30 bg-input/30 hover:bg-input/40"
             >
               <div
                 v-if="imagePreview"
@@ -317,11 +312,11 @@ const createNewTag = () => {
                 <Icon
                   v-else
                   name="lucide:image"
-                  class="w-10 h-10 text-slate-400 mb-2"
+                  class="w-10 h-10 text-muted-foreground mb-2"
                 />
                 <p
                   class="text-sm font-medium"
-                  :class="imageUploaded ? 'text-primary' : 'text-slate-600'"
+                  :class="imageUploaded ? 'text-primary' : 'text-muted-foreground'"
                 >
                   {{ imageUploaded ? "圖片已上傳" : "點擊或拖曳上傳圖片" }}
                 </p>
@@ -338,8 +333,8 @@ const createNewTag = () => {
               class="cursor-pointer transition-colors py-1"
               :class="
                 selectedStyle === style.id
-                  ? 'bg-primary text-primary-foreground hover:bg-primary/90'
-                  : 'hover:bg-slate-100'
+                  ? 'bg-primary text-primary-foreground hover:bg-primary'
+                  : 'hover:bg-primary/10'
               "
               @click="
                 selectedStyle = selectedStyle === style.id ? null : style.id
@@ -349,7 +344,7 @@ const createNewTag = () => {
             </Badge>
             <Badge
               variant="outline"
-              class="cursor-pointer border-dashed hover:bg-slate-100 transition-colors"
+              class="cursor-pointer border-dashed hover:bg-primary/10 transition-colors"
               @click="
                 toast('請前往「風格管理」頁面新增自定義風格', {
                   description: '點擊上方頁籤切換到風格管理',
@@ -366,7 +361,7 @@ const createNewTag = () => {
             <Button
               variant="ghost"
               size="sm"
-              class="w-full justify-start gap-2 text-slate-600 hover:text-slate-900 h-8"
+              class="w-full justify-start gap-2 text-foreground h-8"
               @click="showAdditionalPrompt = !showAdditionalPrompt"
             >
               <Icon
@@ -375,7 +370,7 @@ const createNewTag = () => {
               />
               <Icon name="lucide:message-square-plus" class="w-4 h-4" />
               <span class="text-sm">臨時指令</span>
-              <span class="text-xs text-slate-400">
+              <span class="text-xs text-muted-foreground">
                 {{ additionalPrompt ? '(已填寫)' : '(選填，用於補充照片描述)' }}
               </span>
             </Button>
@@ -388,7 +383,7 @@ const createNewTag = () => {
           </div>
 
           <Button
-            class="w-full gap-2 bg-primary text-primary-foreground hover:bg-primary/90"
+            class="w-full"
             :disabled="isGenerating || !imageFile"
             @click="handleGenerateAI"
           >
@@ -430,7 +425,7 @@ const createNewTag = () => {
         <div class="space-y-2">
           <div
             v-if="tags.length === 0"
-            class="text-center p-8 bg-slate-50 border border-slate-200 rounded-xl text-slate-400 text-sm"
+            class="text-center p-8 bg-input/30 border rounded-md text-muted-foreground text-sm"
           >
             尚無綁定任何夥伴
           </div>
@@ -439,7 +434,7 @@ const createNewTag = () => {
             v-for="(tag, index) in tags"
             :key="tag.id"
             draggable="true"
-            class="flex items-center justify-between p-3 bg-white border border-slate-200 rounded-xl shadow-sm group hover:border-primary transition-colors cursor-move"
+            class="flex items-center justify-between p-3 bg-background dark:bg-input/30 border rounded-md shadow-sm group hover:bg-accent/50 dark:hover:bg-input/50 transition-colors cursor-move"
             @dragstart="dragItem = index"
             @dragenter="dragOverItem = index"
             @dragend="handleDragSort"
@@ -448,14 +443,14 @@ const createNewTag = () => {
             <div class="flex items-center gap-3 overflow-hidden">
               <Icon
                 name="lucide:grip-vertical"
-                class="w-4 h-4 text-slate-400 shrink-0"
+                class="w-4 h-4 shrink-0"
               />
               <span
-                class="bg-slate-100 text-slate-700 text-xs px-2 py-1 rounded border border-slate-200 whitespace-nowrap"
+                class="bg-card text-foreground text-xs px-2 py-1 rounded border border-accent whitespace-nowrap"
               >
                 {{ tag.role }}
               </span>
-              <span class="font-medium text-slate-900 truncate">
+              <span class="font-medium text-foreground truncate">
                 {{ tag.name || "未命名夥伴" }}
               </span>
               <div class="flex items-center gap-2 ml-2">
@@ -463,7 +458,7 @@ const createNewTag = () => {
                   v-for="platform in tag.platforms.filter((p) => p.handle)"
                   :key="platform.id"
                   :name="getPlatform(platform.type).icon"
-                  class="w-3.5 h-3.5 text-slate-400"
+                  class="w-3.5 h-3.5 text-foreground"
                 />
               </div>
             </div>
@@ -471,7 +466,7 @@ const createNewTag = () => {
               <Button
                 variant="ghost"
                 size="sm"
-                class="h-8 w-8 p-0 text-primary hover:bg-primary/10"
+                class="h-8 w-8 p-0"
                 @click="startEditTag(tag)"
               >
                 <Icon name="lucide:edit-2" class="w-4 h-4" />
@@ -479,7 +474,7 @@ const createNewTag = () => {
               <Button
                 variant="ghost"
                 size="sm"
-                class="h-8 w-8 p-0 text-red-500 hover:bg-red-50"
+                class="h-8 w-8 p-0 text-destructive hover:bg-destructive/10 hover:text-destructive"
                 @click="removeTag(tag.id)"
               >
                 <Icon name="lucide:trash-2" class="w-4 h-4" />
@@ -512,48 +507,22 @@ const createNewTag = () => {
         <Card class="overflow-hidden shadow-none rounded-md pt-0 gap-0">
           <CardContent class="p-2">
             <Tabs v-model="activePlatform" class="w-full gap-0">
-              <TabsList class="w-full bg-background grid grid-cols-5">
+              <TabsList class="w-full bg-background dark:bg-card grid grid-cols-5">
                 <TabsTrigger
-                  value="twitter"
-                  class="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded flex items-center justify-center gap-1 text-xs"
+                  v-for="platform in platforms.filter((_, i) => i < 5)"
+                  :key="platform.id"
+                  :value="platform.id"
+                  class="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground dark:data-[state=active]:bg-primary dark:data-[state=active]:text-primary-foreground rounded flex items-center justify-center gap-1 text-xs transition"
                 >
-                  <Icon name="lucide:twitter" class="w-4 h-4" />
-                  <span class="hidden sm:inline">X</span>
-                </TabsTrigger>
-                <TabsTrigger
-                  value="ig"
-                  class="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded flex items-center justify-center gap-1 text-xs"
-                >
-                  <Icon name="lucide:instagram" class="w-4 h-4" />
-                  <span class="hidden sm:inline">IG</span>
-                </TabsTrigger>
-                <TabsTrigger
-                  value="bsky"
-                  class="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded flex items-center justify-center gap-1 text-xs"
-                >
-                  <Icon name="lucide:cloud" class="w-4 h-4" />
-                  <span class="hidden sm:inline">Bsky</span>
-                </TabsTrigger>
-                <TabsTrigger
-                  value="threads"
-                  class="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded flex items-center justify-center gap-1 text-xs"
-                >
-                  <Icon name="lucide:at-sign" class="w-4 h-4" />
-                  <span class="hidden sm:inline">Threads</span>
-                </TabsTrigger>
-                <TabsTrigger
-                  value="plurk"
-                  class="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded flex items-center justify-center gap-1 text-xs"
-                >
-                  <Icon name="lucide:message-circle" class="w-4 h-4" />
-                  <span class="hidden sm:inline">Plurk</span>
+                  <Icon :name="platform.icon" class="w-4 h-4" />
+                  <span class="hidden sm:inline">{{ platform.name }}</span>
                 </TabsTrigger>
               </TabsList>
             </Tabs>
           </CardContent>
-          <div class="border-t border-slate-200 p-6 min-h-75">
+          <div class="border-t p-6 min-h-75">
             <div
-              class="whitespace-pre-wrap text-sm text-slate-700 leading-relaxed"
+              class="whitespace-pre-wrap text-sm text-foreground leading-relaxed"
             >
               <span v-if="!generateFinalText()" class="text-slate-400 italic"
                 >尚未輸入內容...</span
@@ -566,11 +535,6 @@ const createNewTag = () => {
         <ButtonGroup class="w-full">
           <Button
             class="flex-1 h-14 text-base font-bold shadow-lg transition-all"
-            :class="
-              copied
-                ? 'bg-primary hover:bg-primary/90 text-primary-foreground'
-                : 'bg-primary text-primary-foreground hover:bg-primary/90'
-            "
             @click="handleCopy"
           >
             <div v-if="!copied" class="flex items-center gap-3">
@@ -587,19 +551,13 @@ const createNewTag = () => {
             <DropdownMenuTrigger as-child>
               <Button
                 class="h-14 shadow-lg"
-                :class="
-                  copied
-                    ? 'bg-primary hover:bg-primary/90 text-primary-foreground'
-                    : 'bg-primary text-primary-foreground hover:bg-primary/90'
-                "
-                size="icon"
               >
-                <Icon name="lucide:chevron-down" class="w-5 h-5" />
+                <Icon name="lucide:chevron-down"  />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem
-                v-for="platform in platforms.filter(p => p.id !== 'custom')"
+                v-for="platform in builtInPlatforms"
                 :key="platform.id"
                 @click="activePlatform = platform.id"
               >
