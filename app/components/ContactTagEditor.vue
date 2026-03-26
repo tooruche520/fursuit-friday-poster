@@ -22,6 +22,7 @@ const emit = defineEmits<{
 }>()
 
 const { contacts } = useContacts()
+const { roles } = useRoles()
 
 const localData = computed({
   get: () => props.modelValue,
@@ -87,10 +88,13 @@ const handleCancel = () => {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="📸 攝影">📸 攝影</SelectItem>
-                <SelectItem value="✂️ 毛裝工作室">✂️ 毛裝工作室</SelectItem>
-                <SelectItem value="🐾 搭檔">🐾 搭檔</SelectItem>
-                <SelectItem value="💖 特別感謝">💖 特別感謝</SelectItem>
+                <SelectItem 
+                  v-for="role in roles" 
+                  :key="role.id" 
+                  :value="role.name"
+                >
+                  {{ role.name }}
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>

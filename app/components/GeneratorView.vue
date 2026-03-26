@@ -11,6 +11,7 @@ import {
 
 const { contacts, upsertContact } = useContacts();
 const { platforms, activePlatform, getPlatform, getPlatformName } = usePlatforms();
+const { roles } = useRoles();
 const { copy } = useCopyToClipboard();
 const { generateCaption } = useGemini();
 const { styles } = useStyles();
@@ -190,7 +191,10 @@ const generateFinalText = (): string => {
       .join(" ");
 
     if (handles) {
-      result += `${role}：${handles}\n`;
+      // 從角色列表中找到對應的 displayName
+      const roleDefinition = roles.value.find(r => r.name === role)
+      const displayName = roleDefinition?.displayName || role
+      result += `${displayName}：${handles}\n`;
     }
   });
 
@@ -250,7 +254,7 @@ const createNewTag = () => {
   editingTag.value = {
     id: "",
     name: "",
-    role: "🐾 搭檔",
+    role: roles.value[0]?.name || "🐾 搭檔",
     platforms: [
       {
         id: Math.random().toString(36).substr(2, 9),

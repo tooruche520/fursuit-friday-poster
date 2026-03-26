@@ -4,6 +4,7 @@ import { toast } from 'vue-sonner'
 
 const { contacts, upsertContact, deleteContact } = useContacts()
 const { getPlatform } = usePlatforms()
+const { roles } = useRoles()
 
 const editingContact = ref<Contact | null>(null)
 const deleteTargetId = ref<string | null>(null)
@@ -44,7 +45,7 @@ const createNew = () => {
   editingContact.value = {
     id: Math.random().toString(36).substr(2, 9),
     name: '',
-    role: '📸 攝影',
+    role: roles.value[0]?.name || '📸 攝影',
     platforms: [{
       id: Math.random().toString(36).substr(2, 9),
       type: 'twitter',

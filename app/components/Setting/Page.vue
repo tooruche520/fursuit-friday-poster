@@ -35,6 +35,12 @@ const onMenuButtonClick = (value: string) => {
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
+                    <SidebarMenuButton @click="onMenuButtonClick('roles')" :is-active="tabValue === 'roles'">
+                      <Icon name="lucide:tag" />
+                      角色定位
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  <SidebarMenuItem>
                     <SidebarMenuButton @click="onMenuButtonClick('apikeys')" :is-active="tabValue === 'apikeys'">
                       <Icon name="lucide:key" />
                       API 金鑰
@@ -51,6 +57,9 @@ const onMenuButtonClick = (value: string) => {
           <main class="px-4 mt-4 w-full">
             <TabsContent value="contacts">
               <ContactsView />
+            </TabsContent>
+            <TabsContent value="roles">
+              <RolesView />
             </TabsContent>
             <TabsContent value="styles">
               <StylesView />

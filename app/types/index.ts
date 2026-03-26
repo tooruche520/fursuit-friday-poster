@@ -25,6 +25,13 @@ export interface PlatformDefinition {
   icon: string
 }
 
+export interface RoleDefinition {
+  id: string
+  name: string
+  displayName: string
+  icon: string
+}
+
 export interface ApiKeyConfig {
   id: string
   provider: 'gemini' | 'openai' | 'anthropic' | 'custom'
