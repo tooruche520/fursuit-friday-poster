@@ -51,26 +51,23 @@ const onMenuButtonClick = (value: string) => {
             </SidebarGroup>
           </SidebarContent>
           <SidebarFooter>
-            <p class="text-xs text-muted-foreground text-center py-2">
-              All right reserved by 
-              <NuxtLink to="https://tooruche.com" class="text-muted-foreground hover:text-primary hover:underline">Tooruche</NuxtLink>
-            </p>
+            <CopyRightInfo />
           </SidebarFooter>
         </Sidebar>
 
         <div class="flex flex-1">
           <main class="px-4 mt-4 w-full">
             <TabsContent value="contacts">
-              <ContactsView />
+              <SettingContactsView />
             </TabsContent>
             <TabsContent value="roles">
-              <RolesView />
+              <SettingRolesView />
             </TabsContent>
             <TabsContent value="styles">
-              <StylesView />
+              <SettingStylesView />
             </TabsContent>
             <TabsContent value="apikeys">
-              <ApiKeysView />
+              <SettingApiKeysView />
             </TabsContent>
           </main>
         </div>

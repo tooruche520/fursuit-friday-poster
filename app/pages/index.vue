@@ -6,7 +6,7 @@
 
     <!-- Main Content -->
     <main class="px-4 mt-4">
-      <GeneratorView />
+      <GeneratorPage />
     </main>
   </div>
 </template>
