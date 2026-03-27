@@ -1,8 +1,51 @@
 import type { Contact } from '~/types'
 
+type ContactStorageRecord = Omit<Contact, 'defaultRoleId'> & {
+  defaultRoleId?: string
+  role?: string
+  partnerDisplay?: string
+}
+
 export function useContacts() {
-  // 使用 VueUse 的 useLocalStorage 管理聯絡人
   const contacts = useLocalStorage<Contact[]>('fursuit-friday-contacts', [])
+  const { roles } = useRoles()
+
+  // 一次性 migration：舊版 role（顯示名稱字串）→ 新版 defaultRoleId（角色 ID）
+  ;(function migrateLegacyData() {
+    const current = contacts.value as unknown as ContactStorageRecord[]
+
+    const hasLegacyRole = current.some(c => Boolean(c.role) && !c.defaultRoleId)
+    const missingPartnerDisplay = current.some(
+      c => c.defaultRoleId === 'partner' && !c.partnerDisplay,
+    )
+
+    if (!hasLegacyRole && !missingPartnerDisplay) return
+
+    const partnerRole = roles.value.find(r => r.id === 'partner')
+    const defaultPartnerDisplay = partnerRole?.displayName || partnerRole?.name || '🐾 搭檔'
+
+    contacts.value = current.map((c): Contact => {
+      if (c.defaultRoleId) {
+        return {
+          ...(c as Contact),
+          partnerDisplay:
+            c.defaultRoleId === 'partner'
+              ? c.partnerDisplay || defaultPartnerDisplay
+              : c.partnerDisplay,
+        }
+      }
+
+      const { role, ...rest } = c
+      const matchingRole = roles.value.find(r => r.name === role)
+      const defaultRoleId = matchingRole?.id ?? roles.value[0]?.id ?? 'photography'
+
+      return {
+        ...rest,
+        defaultRoleId,
+        partnerDisplay: defaultRoleId === 'partner' ? (c.partnerDisplay || defaultPartnerDisplay) : c.partnerDisplay,
+      }
+    })
+  })()
 
   // 新增或更新聯絡人
   const upsertContact = (contact: Contact) => {

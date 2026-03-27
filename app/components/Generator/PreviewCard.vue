@@ -34,16 +34,18 @@ const activePlatformModel = computed({
 const finalText = computed(() => {
   let result = props.mainText + '\n\n'
 
-  const groupedByRole = props.tags.reduce(
-    (acc, tag) => {
-      if (!acc[tag.role]) acc[tag.role] = []
-      acc[tag.role]!.push(tag)
-      return acc
-    },
-    {} as Record<string, Tag[]>,
-  )
+  // 以 roleId + partnerLabel 組合為分組鍵，同組才合併到同一行
+  const groups = new Map<string, { roleId: string; partnerLabel: string | undefined; tags: Tag[] }>()
 
-  Object.entries(groupedByRole).forEach(([role, tagList]) => {
+  props.tags.forEach(tag => {
+    const key = `${tag.roleId}::${tag.partnerLabel ?? ''}`
+    if (!groups.has(key)) {
+      groups.set(key, { roleId: tag.roleId, partnerLabel: tag.partnerLabel, tags: [] })
+    }
+    groups.get(key)!.tags.push(tag)
+  })
+
+  groups.forEach(({ roleId, partnerLabel, tags: tagList }) => {
     const handles = tagList
       .map((tag) => {
         if (props.activePlatform.startsWith('custom-')) {
@@ -60,8 +62,8 @@ const finalText = computed(() => {
 
     if (!handles) return
 
-    const roleDefinition = roles.value.find((item) => item.name === role)
-    const displayName = roleDefinition?.displayName || role
+    const roleDefinition = roles.value.find((item) => item.id === roleId)
+    const displayName = partnerLabel || roleDefinition?.displayName || roleId
     result += `${displayName}：${handles}\n`
   })
 

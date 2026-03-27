@@ -10,9 +10,14 @@ const emit = defineEmits<{
   'update:modelValue': [value: Tag[]]
 }>()
 
-const { upsertContact } = useContacts()
-const { roles } = useRoles()
+const { upsertContact, contacts } = useContacts()
+const { roles, getRole } = useRoles()
 const { getPlatform } = usePlatforms()
+
+const getPartnerDisplayName = () => {
+  const partnerRole = getRole('partner')
+  return partnerRole?.displayName || partnerRole?.name
+}
 
 const tags = computed({
   get: () => props.modelValue,
@@ -62,10 +67,22 @@ const saveTag = () => {
     id: tagId,
   }
 
+  // 初始化 partnerDisplay：若原始通訊錄資料未設定，於貼文標記儲存時自動補齊
+  const existingContact = contacts.value.find(c => c.id === tagId)
+  const initializedPartnerDisplay =
+    nextTag.roleId === 'partner'
+      ? (existingContact?.partnerDisplay || nextTag.partnerLabel || getPartnerDisplayName())
+      : existingContact?.partnerDisplay
+
+  if (nextTag.roleId === 'partner' && !nextTag.partnerLabel) {
+    nextTag.partnerLabel = initializedPartnerDisplay
+  }
+
   upsertContact({
     id: tagId,
     name: nextTag.name,
-    role: nextTag.role,
+    defaultRoleId: nextTag.roleId,
+    partnerDisplay: initializedPartnerDisplay,
     platforms: cloneTag(nextTag).platforms,
   })
 
@@ -97,7 +114,7 @@ const createNewTag = () => {
   editingTag.value = {
     id: '',
     name: '',
-    role: roles.value[0]?.name || '🐾 搭檔',
+    roleId: roles.value[0]?.id || 'partner',
     platforms: [
       {
         id: createId(),
@@ -148,9 +165,13 @@ const createNewTag = () => {
         <div class="flex items-center gap-3 overflow-hidden">
           <Icon name="lucide:grip-vertical" class="w-4 h-4 shrink-0" />
           <span
-            class="bg-card text-foreground text-xs px-2 py-1 rounded border border-accent whitespace-nowrap"
+            class="bg-card text-foreground text-xs px-2 py-1 rounded border border-accent whitespace-nowrap flex items-center gap-1"
           >
-            {{ tag.role }}
+            <span v-if="tag.roleId === 'partner'"> 
+              {{ tag.partnerLabel }}
+            </span>
+            <Icon v-else :name="getRole(tag.roleId)?.icon" />
+            {{ getRole(tag.roleId)?.name }}
           </span>
           <span class="font-medium text-foreground truncate">
             {{ tag.name || '未命名夥伴' }}

@@ -4,7 +4,7 @@ import { toast } from 'vue-sonner'
 
 const { contacts, upsertContact, deleteContact } = useContacts()
 const { getPlatform } = usePlatforms()
-const { roles } = useRoles()
+const { roles, getRole } = useRoles()
 
 const editingContact = ref<Contact | null>(null)
 const deleteTargetId = ref<string | null>(null)
@@ -45,7 +45,7 @@ const createNew = () => {
   editingContact.value = {
     id: Math.random().toString(36).substr(2, 9),
     name: '',
-    role: roles.value[0]?.name || '📸 攝影',
+    defaultRoleId: roles.value[0]?.id || 'photography',
     platforms: [{
       id: Math.random().toString(36).substr(2, 9),
       type: 'twitter',
@@ -100,8 +100,9 @@ const createNew = () => {
               <TableCell class="pl-3">
                 <div class="flex items-center gap-2">
                   <div class="font-medium text-foreground text-base">{{ contact.name }}</div>
-                  <Badge variant="secondary">
-                    {{ contact.role }}
+                  <Badge v-if="getRole(contact.defaultRoleId)" variant="secondary">
+                    <Icon :name="getRole(contact.defaultRoleId)!.icon" class="w-3 h-3" />
+                    {{ getRole(contact.defaultRoleId)!.name }}
                   </Badge>
 
                 </div>
@@ -154,6 +155,7 @@ const createNew = () => {
       :title="editingContact?.id ? '編輯夥伴資料' : '新增夥伴資料'"
       confirm-text="儲存資料"
       :show-autocomplete="false"
+      mode="contact"
       @confirm="saveContact"
     />
 

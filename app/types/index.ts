@@ -8,14 +8,16 @@ export interface Platform {
 export interface Contact {
   id: string
   name: string
-  role: string
+  defaultRoleId: string
+  partnerDisplay?: string
   platforms: Platform[]
 }
 
 export interface Tag {
   id: string
   name: string
-  role: string
+  roleId: string
+  partnerLabel?: string
   platforms: Platform[]
 }
 

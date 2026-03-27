@@ -22,6 +22,11 @@ const saveRole = () => {
     toast.error('角色 ID 不可為空')
     return
   }
+
+  if (!editingRole.value.icon.trim()) {
+    // 自動設定標籤圖示
+    editingRole.value.icon = 'lucide:tag'
+  }
   
   // 檢查 ID 是否重複（編輯時排除原始 ID）
   const isDuplicate = roles.value.some(r => 
@@ -85,7 +90,7 @@ const createNew = () => {
     id: '',
     name: '',
     displayName: '',
-    icon: 'lucide:circle'
+    icon: 'lucide:tag'
   }
   isEditorOpen.value = true
 }

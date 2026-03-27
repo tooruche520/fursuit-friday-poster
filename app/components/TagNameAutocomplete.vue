@@ -8,8 +8,10 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  update: [fields: { id?: string, name?: string, role?: string, platforms?: Platform[] }]
+  update: [fields: { id?: string, name?: string, roleId?: string, partnerLabel?: string, platforms?: Platform[] }]
 }>()
+
+const { roles, getRole } = useRoles()
 
 const isOpen = ref(false)
 const search = ref(props.name || '')
@@ -41,7 +43,8 @@ const selectContact = (contact: Contact) => {
   emit('update', {
     id: contact.id,  // 傳遞 id，讓 Tag.id 等於 Contact.id
     name: contact.name,
-    role: contact.role,
+    roleId: contact.defaultRoleId,
+    partnerLabel: contact.partnerDisplay,
     platforms: JSON.parse(JSON.stringify(contact.platforms))
   })
   isOpen.value = false
@@ -68,8 +71,9 @@ const selectContact = (contact: Contact) => {
         @click="selectContact(contact)"
       >
         <span class="font-medium text-slate-800">{{ contact.name }}</span>
-        <span class="text-xs text-slate-500 bg-slate-200 px-1.5 py-0.5 rounded-md">
-          {{ contact.role }}
+        <span class="text-xs text-slate-500 bg-slate-200 px-1.5 py-0.5 rounded-md flex items-center gap-1">
+          <Icon :name="getRole(contact.defaultRoleId)?.icon" class="w-3 h-3" />
+          {{ getRole(contact.defaultRoleId)?.name }}
         </span>
       </div>
     </div>
