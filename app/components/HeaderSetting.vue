@@ -8,7 +8,7 @@ const { toggleSidebar } = useSidebar();
   <header class="bg-background border-b sticky top-0 z-40">
     <div class="mx-auto px-4 h-12 flex items-center justify-between">
       <!-- 右側選單 -->
-      <div class="flex items-center justify-around gap-2">
+      <div class="flex items-center justify-around">
         <!-- 回上一頁 -->
         <Button
           variant="ghost"
@@ -21,8 +21,6 @@ const { toggleSidebar } = useSidebar();
           </NuxtLink>
         </Button>
 
-        <h1 class="font-bold text-foreground">設定</h1>
-
         <!-- 開啟關閉菜單 -->
         <Button
           variant="ghost"
@@ -32,6 +30,8 @@ const { toggleSidebar } = useSidebar();
         >
           <Icon name="lucide:menu" />
         </Button>
+
+        <h1 class="font-bold text-foreground ml-3">設定</h1>
 
       </div>
 

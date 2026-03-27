@@ -107,12 +107,12 @@ const maskApiKey = (key: string): string => {
 </script>
 
 <template>
-  <div class="max-w-4xl mx-auto space-y-6 animate-in fade-in duration-300">
+  <div class="max-w-5xl mx-auto space-y-6 animate-in fade-in duration-300">
     <!-- 標題區 -->
     <div class="flex items-center justify-between">
       <div>
-        <h1 class="text-2xl font-bold text-slate-900">API 金鑰管理</h1>
-        <p class="text-sm text-slate-500 mt-1">
+        <h1 class="text-2xl font-bold text-foreground">API 金鑰管理</h1>
+        <p class="text-sm text-muted-foreground mt-1">
           管理各種 AI 服務的 API Keys，確保服務正常運作
         </p>
       </div>
@@ -187,11 +187,11 @@ const maskApiKey = (key: string): string => {
           <!-- API Key 資訊 -->
           <div
             v-if="config.key"
-            class="flex items-center justify-between p-3 bg-slate-50 rounded-lg"
+            class="flex items-center justify-between p-3 bg-muted rounded-lg"
           >
             <div class="flex items-center gap-2">
               <Icon name="lucide:check-circle" class="w-4 h-4 text-green-600" />
-              <span class="text-sm text-slate-700">
+              <span class="text-sm text-muted-foreground">
                 當前 API Key: {{ maskApiKey(config.key) }}
               </span>
             </div>
@@ -220,7 +220,7 @@ const maskApiKey = (key: string): string => {
               </Button>
             </div>
             <div class="flex items-center gap-2">
-              <span class="text-sm text-slate-600">
+              <span class="text-sm text-muted-foreground">
                 {{ config.enabled ? "已啟用" : "已停用" }}
               </span>
               <Button
@@ -242,19 +242,19 @@ const maskApiKey = (key: string): string => {
     </div>
 
     <!-- 說明區 -->
-    <Card class="bg-blue-50 border-blue-200">
-      <CardContent class="pt-6">
+    <Card class="bg-muted/50">
+      <CardContent class="pt-0">
         <div class="flex gap-3">
-          <Icon name="lucide:info" class="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
+          <Icon name="lucide:info" class="w-5 h-5 text-primary shrink-0 mt-0.5" />
           <div class="space-y-2">
-            <h3 class="font-semibold text-blue-900">如何取得 API Key？</h3>
-            <ul class="text-sm text-blue-800 space-y-1 list-disc list-inside">
+            <h3 class="font-semibold text-foreground">如何取得 API Key？</h3>
+            <ul class="text-sm text-muted-foreground space-y-1 list-disc list-inside">
               <li>
                 <strong>Google Gemini:</strong> 前往
                 <a
                   href="https://makersuite.google.com/app/apikey"
                   target="_blank"
-                  class="underline hover:text-blue-600"
+                  class="underline hover:text-primary"
                   >Google AI Studio</a
                 >
                 申請
@@ -264,7 +264,7 @@ const maskApiKey = (key: string): string => {
                 <a
                   href="https://platform.openai.com/api-keys"
                   target="_blank"
-                  class="underline hover:text-blue-600"
+                  class="underline hover:text-primary"
                   >OpenAI Platform</a
                 >
                 申請（未來支援）
@@ -274,13 +274,13 @@ const maskApiKey = (key: string): string => {
                 <a
                   href="https://console.anthropic.com/"
                   target="_blank"
-                  class="underline hover:text-blue-600"
+                  class="underline hover:text-primary"
                   >Anthropic Console</a
                 >
                 申請（未來支援）
               </li>
             </ul>
-            <p class="text-sm text-blue-700 mt-3">
+            <p class="text-sm text-muted-foreground mt-3">
               💡 API Key 僅儲存在您的瀏覽器本地，不會上傳至任何伺服器
             </p>
           </div>

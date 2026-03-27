@@ -157,7 +157,7 @@ const removePlatform = (id: string) => {
         <Button
           variant="ghost"
           size="icon"
-          class="h-9 w-9 text-red-500 hover:text-red-600 hover:bg-red-50"
+          class="h-9 w-9 text-destructive hover:text-destructive hover:bg-destructive/10"
           @click="removePlatform(platform.id)"
         >
           <Icon name="lucide:trash-2" class="w-4 h-4" />
@@ -169,7 +169,7 @@ const removePlatform = (id: string) => {
     <Button
       variant="outline"
       size="sm"
-      class="w-full border-dashed text-xs text-slate-500 hover:text-slate-700 hover:border-slate-400"
+      class="w-full border-dashed text-xs text-muted-foreground hover:text-foreground hover:border-muted-foreground"
       @click="addPlatform"
     >
       <Icon name="lucide:plus" />

@@ -102,11 +102,11 @@ watch(isEditorOpen, (newValue) => {
   <div class="max-w-5xl mx-auto space-y-6 animate-in fade-in duration-300">
     <div class="flex items-center justify-between">
       <div>
-        <h2 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
+        <h2 class="text-2xl font-bold text-foreground flex items-center gap-2">
           <Icon name="lucide:tag" class="w-6 h-6 text-primary" />
           角色定位管理
         </h2>
-        <p class="text-slate-500 mt-1">
+        <p class="text-muted-foreground mt-1">
           自訂角色定位的顯示文字，標記者會按照角色定位分組顯示。
         </p>
       </div>
@@ -130,30 +130,30 @@ watch(isEditorOpen, (newValue) => {
           <TableBody>
             <TableRow v-if="roles.length === 0">
               <TableCell colspan="4" class="text-center py-16">
-                <Icon name="lucide:tag" class="w-12 h-12 mx-auto text-slate-200 mb-3" />
-                <p class="text-base font-medium text-slate-700">尚未設定任何角色定位</p>
-                <p class="text-sm text-slate-500 mt-1">點擊上方「新增角色」開始建立</p>
+                <Icon name="lucide:tag" class="w-12 h-12 mx-auto text-muted-foreground/30 mb-3" />
+                <p class="text-base font-medium text-foreground">尚未設定任何角色定位</p>
+                <p class="text-sm text-muted-foreground mt-1">點擊上方「新增角色」開始建立</p>
               </TableCell>
             </TableRow>
             
             <TableRow
               v-for="role in roles"
               :key="role.id"
-              class="hover:bg-slate-50/80 transition-colors"
+              class="hover:bg-accent/50 transition-colors"
             >
               <TableCell class="pl-3">
                 <div class="flex items-center gap-2">
-                  <Icon :name="role.icon" class="w-4 h-4 text-slate-500" />
-                  <code class="text-sm text-slate-600 bg-slate-100 px-2 py-0.5 rounded">{{ role.id }}</code>
+                  <Icon :name="role.icon" class="w-4 h-4 text-muted-foreground" />
+                  <code class="text-sm text-muted-foreground bg-muted px-2 py-0.5 rounded">{{ role.id }}</code>
                 </div>
               </TableCell>
               
               <TableCell>
-                <div class="font-medium text-slate-900 text-base">{{ role.name }}</div>
+                <div class="font-medium text-foreground text-base">{{ role.name }}</div>
               </TableCell>
               
               <TableCell>
-                <div class="font-medium text-slate-900 text-base">{{ role.displayName }}</div>
+                <div class="font-medium text-foreground text-base">{{ role.displayName }}</div>
               </TableCell>
               
               <TableCell class="text-right">
@@ -167,7 +167,7 @@ watch(isEditorOpen, (newValue) => {
                 <Button
                   variant="ghost"
                   size="icon"
-                  class="text-red-500 hover:text-red-600 hover:bg-red-50"
+                  class="text-destructive hover:text-destructive hover:bg-destructive/10"
                   @click="openDeleteDialog(role.id)"
                 >
                   <Icon name="lucide:trash-2" class="w-4 h-4" />
@@ -197,7 +197,7 @@ watch(isEditorOpen, (newValue) => {
               placeholder="例如: custom-role"
               :disabled="originalRoleId !== null"
             />
-            <p class="text-xs text-slate-500 mt-1">
+            <p class="text-xs text-muted-foreground mt-1">
               用於內部識別，建議使用英文、數字或連字號{{ originalRoleId ? '（編輯時無法修改）' : '' }}
             </p>
           </div>
@@ -208,7 +208,7 @@ watch(isEditorOpen, (newValue) => {
               v-model="editingRole.name"
               placeholder="例如: 📸 攝影"
             />
-            <p class="text-xs text-slate-500 mt-1">
+            <p class="text-xs text-muted-foreground mt-1">
               會顯示在新增/編輯標記者時的角色定位下拉選單中
             </p>
           </div>
@@ -219,7 +219,7 @@ watch(isEditorOpen, (newValue) => {
               v-model="editingRole.displayName"
               placeholder="例如: 攝影"
             />
-            <p class="text-xs text-slate-500 mt-1">
+            <p class="text-xs text-muted-foreground mt-1">
               會顯示在最終輸出的貼文內容中（如：攝影：@xxx）
             </p>
           </div>
@@ -230,7 +230,7 @@ watch(isEditorOpen, (newValue) => {
               v-model="editingRole.icon"
               placeholder="例如: lucide:camera"
             />
-            <p class="text-xs text-slate-500 mt-1">
+            <p class="text-xs text-muted-foreground mt-1">
               預留欄位，目前僅用於顯示參考
             </p>
           </div>

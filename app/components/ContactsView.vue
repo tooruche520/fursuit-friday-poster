@@ -59,11 +59,11 @@ const createNew = () => {
   <div class="max-w-5xl mx-auto space-y-6 animate-in fade-in duration-300">
     <div class="flex items-center justify-between">
       <div>
-        <h2 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
+        <h2 class="text-2xl font-bold text-foreground flex items-center gap-2">
           <Icon name="lucide:book" class="w-6 h-6 text-primary" />
           通訊錄管理
         </h2>
-        <p class="text-slate-500 mt-1">
+        <p class="text-muted-foreground mt-1">
           集中管理常合作的夥伴,發文時可一鍵快速帶入所有跨平台帳號。
         </p>
       </div>
@@ -86,20 +86,20 @@ const createNew = () => {
           <TableBody>
             <TableRow v-if="contacts.length === 0">
               <TableCell colspan="3" class="text-center py-16">
-                <Icon name="lucide:users" class="w-12 h-12 mx-auto text-slate-200 mb-3" />
-                <p class="text-base font-medium text-slate-700">通訊錄目前是空的</p>
-                <p class="text-sm text-slate-500 mt-1">點擊上方「新增夥伴」開始建立通訊錄</p>
+                <Icon name="lucide:users" class="w-12 h-12 mx-auto text-muted-foreground/30 mb-3" />
+                <p class="text-base font-medium text-foreground">通訊錄目前是空的</p>
+                <p class="text-sm text-muted-foreground mt-1">點擊上方「新增夥伴」開始建立通訊錄</p>
               </TableCell>
             </TableRow>
             
             <TableRow
               v-for="contact in contacts"
               :key="contact.id"
-              class="hover:bg-slate-50/80 transition-colors"
+              class="hover:bg-accent/50 transition-colors"
             >
               <TableCell class="pl-3">
                 <div class="flex items-center gap-2">
-                  <div class="font-medium text-slate-900 text-base">{{ contact.name }}</div>
+                  <div class="font-medium text-foreground text-base">{{ contact.name }}</div>
                   <Badge variant="secondary">
                     {{ contact.role }}
                   </Badge>
@@ -120,10 +120,10 @@ const createNew = () => {
                       {{ platform.customName }}:
                     </span>
                     <span v-if="platform.handle">{{ platform.handle }}</span>
-                    <span v-else class="text-slate-400 italic">未填寫</span>
+                    <span v-else class="text-muted-foreground italic">未填寫</span>
                   </Badge>
                 </div>
-                <span v-else class="text-slate-400 italic">尚未設定任何帳號</span>
+                <span v-else class="text-muted-foreground italic">尚未設定任何帳號</span>
               </TableCell>
               
               <TableCell class="text-right">
@@ -137,7 +137,7 @@ const createNew = () => {
                 <Button
                   variant="ghost"
                   size="icon"
-                  class="text-red-500 hover:text-red-600 hover:bg-red-50"
+                  class="text-destructive hover:text-destructive hover:bg-destructive/10"
                   @click="openDeleteDialog(contact.id)"
                 >
                   <Icon name="lucide:trash-2" class="w-4 h-4" />
@@ -168,7 +168,7 @@ const createNew = () => {
         <AlertDialogFooter>
           <AlertDialogCancel>取消</AlertDialogCancel>
           <AlertDialogAction
-            class="bg-red-500 hover:bg-red-600"
+            class="bg-destructive hover:bg-destructive/90"
             @click="confirmDelete"
           >
             確認刪除

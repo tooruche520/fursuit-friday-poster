@@ -61,10 +61,10 @@ const handleCancel = () => {
         </DialogTitle>
       </DialogHeader>
       
-      <div v-if="localData" class="flex-1 overflow-auto space-y-4 mt-1">
+      <div v-if="localData" class="flex-1 overflow-auto space-y-4 mt-1 -m-1 p-1">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <Label class="mb-2 text-primary flex items-center gap-1">
+            <Label class="mb-2 flex items-center gap-1">
               顯示名稱 (支援搜尋)
               <Icon v-if="showAutocomplete" name="lucide:sparkles" class="w-3 h-3" />
             </Label>

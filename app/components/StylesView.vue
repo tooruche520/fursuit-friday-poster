@@ -74,11 +74,11 @@ const createNew = () => {
   <div class="max-w-5xl mx-auto space-y-6 animate-in fade-in duration-300">
     <div class="flex items-center justify-between">
       <div>
-        <h2 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
+        <h2 class="text-2xl font-bold text-foreground flex items-center gap-2">
           <Icon name="lucide:palette" class="w-6 h-6 text-primary" />
           風格提示詞管理
         </h2>
-        <p class="text-slate-500 mt-1">
+        <p class="text-muted-foreground mt-1">
           管理 AI 文案生成的風格提示詞,自訂專屬的創作風格。
         </p>
       </div>
@@ -101,25 +101,25 @@ const createNew = () => {
           <TableBody>
             <TableRow v-if="styles.length === 0">
               <TableCell colspan="3" class="text-center py-16">
-                <Icon name="lucide:palette" class="w-12 h-12 mx-auto text-slate-200 mb-3" />
-                <p class="text-base font-medium text-slate-700">尚未建立任何風格</p>
-                <p class="text-sm text-slate-500 mt-1">點擊上方「新增風格」開始建立</p>
+                <Icon name="lucide:palette" class="w-12 h-12 mx-auto text-muted-foreground/30 mb-3" />
+                <p class="text-base font-medium text-foreground">尚未建立任何風格</p>
+                <p class="text-sm text-muted-foreground mt-1">點擊上方「新增風格」開始建立</p>
               </TableCell>
             </TableRow>
             
             <TableRow
               v-for="style in styles"
               :key="style.id"
-              class="hover:bg-slate-50/80 transition-colors"
+              class="hover:bg-accent/50 transition-colors"
             >
               <TableCell class="pl-3">
                 <div class="flex items-center gap-2">
-                  <div class="font-medium text-slate-900 text-base">{{ style.name }}</div>
+                  <div class="font-medium text-foreground text-base">{{ style.name }}</div>
                 </div>
               </TableCell>
               
               <TableCell>
-                <div class="text-sm text-slate-600 truncate max-w-md">
+                <div class="text-sm text-muted-foreground truncate max-w-md">
                   {{ style.prompt }}
                 </div>
               </TableCell>
@@ -135,7 +135,7 @@ const createNew = () => {
                 <Button
                   variant="ghost"
                   size="icon"
-                  class="text-red-500 hover:text-red-600 hover:bg-red-50"
+                  class="text-destructive hover:text-destructive hover:bg-destructive/10"
                   @click="openDeleteDialog(style.id)"
                 >
                   <Icon name="lucide:trash-2" class="w-4 h-4" />
@@ -174,7 +174,7 @@ const createNew = () => {
               placeholder="請用詩意的文字描述這張照片的氛圍..."
               class="min-h-24 max-h-52 resize-y"
             />
-            <p class="text-xs text-slate-500">
+            <p class="text-xs text-muted-foreground">
               💡 提示詞會傳送給 AI 模型,影響生成文案的風格與內容
             </p>
           </div>
@@ -202,7 +202,7 @@ const createNew = () => {
         <AlertDialogFooter>
           <AlertDialogCancel>取消</AlertDialogCancel>
           <AlertDialogAction
-            class="bg-red-500 hover:bg-red-600"
+            class="bg-destructive hover:bg-destructive/90"
             @click="confirmDelete"
           >
             確認刪除

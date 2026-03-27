@@ -11,8 +11,8 @@ const onMenuButtonClick = (value: string) => {
 </script>
 
 <template>
-  <Tabs default-value="generator" v-model="tabValue">
-    <div class="w-screen">
+  <Tabs default-value="generator" v-model="tabValue" class="w-full">
+    <div class="w-full">
       <HeaderSetting />
 
       <div class="flex flex-1">
@@ -50,7 +50,12 @@ const onMenuButtonClick = (value: string) => {
               </SidebarGroupContent>
             </SidebarGroup>
           </SidebarContent>
-          <SidebarFooter> wuiroh </SidebarFooter>
+          <SidebarFooter>
+            <p class="text-xs text-muted-foreground text-center py-2">
+              All right reserved by 
+              <NuxtLink to="https://tooruche.com" class="text-muted-foreground hover:text-primary hover:underline">Tooruche</NuxtLink>
+            </p>
+          </SidebarFooter>
         </Sidebar>
 
         <div class="flex flex-1">
