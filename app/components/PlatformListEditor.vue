@@ -103,7 +103,7 @@ const removePlatform = (id: string) => {
       class="grid grid-cols-12 gap-2 items-start"
     >
       <!-- 平台選擇 -->
-      <div class="col-span-4">
+      <div class="col-span-5 sm:col-span-4">
         <Select
           :model-value="getPlatformSelectValue(platform)"
           @update:model-value="(val) => handlePlatformTypeChange(platform.id, String(val))"
@@ -133,7 +133,7 @@ const removePlatform = (id: string) => {
       </div>
 
       <!-- 自訂名稱 (僅選擇「自訂」時顯示，選擇已存在的自訂平台時不顯示) -->
-      <div v-if="platform.type === 'custom' && !customPlatforms.find(cp => cp.name === platform.customName)" class="col-span-3">
+      <div v-if="platform.type === 'custom' && !customPlatforms.find(cp => cp.name === platform.customName)" class="col-span-6 sm:col-span-7">
         <Input
           :model-value="platform.customName"
           placeholder="平台名稱"
@@ -143,7 +143,7 @@ const removePlatform = (id: string) => {
       </div>
 
       <!-- 帳號輸入 -->
-      <div :class="platform.type === 'custom' && !customPlatforms.find(cp => cp.name === platform.customName) ? 'col-span-4' : 'col-span-7'">
+      <div :class="platform.type === 'custom' && !customPlatforms.find(cp => cp.name === platform.customName) ? 'col-span-11' : 'col-span-6 sm:col-span-7'">
         <Input
           :model-value="platform.handle"
           :placeholder="platform.type === 'twitter' ? '@username' : '帳號名稱'"

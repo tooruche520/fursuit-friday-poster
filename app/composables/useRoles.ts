@@ -38,8 +38,8 @@ export function useRoles() {
   }
 
   // 取得角色
-  const getRole = (id: string): RoleDefinition | undefined => {
-    return roles.value.find(r => r.id === id)
+  const getRole = (id: string): RoleDefinition => {
+    return roles.value.find(r => r.id === id) || { id, name: id, displayName: id, icon: 'lucide:user' }
   }
 
   // 根據顯示名稱查找角色

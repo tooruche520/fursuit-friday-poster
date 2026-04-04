@@ -93,7 +93,7 @@ const handleCancel = () => {
 
 <template>
   <Dialog v-model:open="isOpen">
-    <DialogContent class="max-w-2xl w-[80vw] max-h-[90vh] flex flex-col">
+    <DialogContent class="max-w-3xl w-[95vw] max-h-[90vh] flex flex-col">
       <DialogHeader>
         <DialogTitle class="flex items-center gap-2">
           <Icon name="lucide:user-plus" class="w-5 h-5 text-primary" />
@@ -102,7 +102,7 @@ const handleCancel = () => {
       </DialogHeader>
       
       <div v-if="localData" class="flex-1 overflow-auto space-y-4 mt-1 -m-1 p-1">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="grid grid-cols-2 gap-4">
           <div>
             <Label class="mb-2 flex items-center gap-1">
               顯示名稱 (支援搜尋)
@@ -163,6 +163,9 @@ const handleCancel = () => {
         <Separator />
         <div>
           <Label class="mb-2 block ">社群平台設定</Label>
+          <div class="text-xs text-muted-foreground my-2 flex items-center gap-1">
+            需加上@符號
+          </div>
           <PlatformListEditor
             :platforms="localData.platforms"
             @update="(platforms) => localData!.platforms = platforms"
