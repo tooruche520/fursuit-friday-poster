@@ -62,16 +62,16 @@ const selectContact = (contact: Contact) => {
     
     <div
       v-if="isOpen && filtered.length > 0"
-      class="absolute z-50 w-full mt-1 bg-white border border-slate-200 rounded-lg shadow-lg max-h-48 overflow-auto"
+      class="absolute z-50 w-full mt-1 bg-popover border border-border rounded-lg shadow-lg max-h-48 overflow-auto"
     >
       <div
         v-for="contact in filtered"
         :key="contact.id"
-        class="px-3 py-2 text-sm cursor-pointer hover:bg-slate-100 flex justify-between items-center border-b border-slate-50 last:border-0 transition-colors"
+        class="px-3 py-2 text-sm cursor-pointer hover:bg-accent flex justify-between items-center border-b border-border last:border-0 transition-colors"
         @click="selectContact(contact)"
       >
-        <span class="font-medium text-slate-800">{{ contact.name }}</span>
-        <span class="text-xs text-slate-500 bg-slate-200 px-1.5 py-0.5 rounded-md flex items-center gap-1">
+        <span class="font-medium text-foreground">{{ contact.name }}</span>
+        <span class="text-xs text-muted-foreground bg-secondary px-1.5 py-0.5 rounded-md flex items-center gap-1">
           <Icon :name="getRole(contact.defaultRoleId)?.icon" class="w-3 h-3" />
           {{ getRole(contact.defaultRoleId)?.name }}
         </span>
