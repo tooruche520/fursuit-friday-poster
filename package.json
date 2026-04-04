@@ -21,6 +21,7 @@
     "@vueuse/nuxt": "14.2.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "driver.js": "^1.4.0",
     "lucide-vue-next": "^0.577.0",
     "nuxt": "^4.4.2",
     "reka-ui": "^2.9.2",

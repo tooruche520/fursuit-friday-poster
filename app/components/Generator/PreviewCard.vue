@@ -90,11 +90,11 @@ const handleCopy = async () => {
 </script>
 
 <template>
-  <div class="sticky top-16 space-y-4">
+  <div id="tour-preview-card" class="sticky top-16 space-y-4">
     <Card class="overflow-hidden shadow-none rounded-md pt-0 gap-0">
       <CardContent class="p-2">
         <Tabs v-model="activePlatformModel" class="w-full gap-0">
-          <TabsList class="w-full bg-background dark:bg-card grid grid-cols-5">
+          <TabsList id="tour-platform-tabs" class="w-full bg-background dark:bg-card grid grid-cols-5">
             <TabsTrigger
               v-for="platform in builtInPlatforms.slice(0, 5)"
               :key="platform.id"
@@ -115,7 +115,7 @@ const handleCopy = async () => {
       </div>
     </Card>
 
-    <ButtonGroup class="w-full">
+    <ButtonGroup class="w-full" id="tour-copy-btn">
       <Button
         class="flex-1 h-14 text-base font-bold shadow-lg transition-all"
         @click="handleCopy"

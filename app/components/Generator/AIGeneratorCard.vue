@@ -109,7 +109,7 @@ const handleGenerateAI = async () => {
 </script>
 
 <template>
-  <Card class="p-6 shadow-none rounded-md">
+  <Card id="tour-ai-card" class="p-6 shadow-none rounded-md">
     <div class="flex items-center gap-3">
       <Icon name="lucide:message-square" class="w-5 h-5 text-primary" />
       <h2 class="text-lg font-semibold">1. AI 文案生成</h2>
@@ -125,6 +125,7 @@ const handleGenerateAI = async () => {
           @change="handleImageUpload"
         />
         <label
+          id="tour-image-upload"
           for="image-upload"
           class="block border-2 border-dashed rounded-xl p-8 cursor-pointer transition-colors overflow-hidden border-primary/30 bg-input/30 hover:bg-input/40"
         >
@@ -160,7 +161,7 @@ const handleGenerateAI = async () => {
         </label>
       </div>
 
-      <div class="flex flex-wrap gap-2">
+      <div id="tour-style-badges" class="flex flex-wrap gap-2">
         <Badge
           v-for="style in styles"
           :key="style.id"
@@ -231,6 +232,7 @@ const handleGenerateAI = async () => {
       </div>
 
       <Button
+        id="tour-generate-btn"
         class="w-full"
         :disabled="isGenerating || !imageFile"
         @click="handleGenerateAI"
@@ -241,6 +243,7 @@ const handleGenerateAI = async () => {
       </Button>
 
       <Textarea
+        id="tour-main-text"
         v-model="mainText"
         placeholder="草稿內容..."
         class="min-h-30 resize-y"

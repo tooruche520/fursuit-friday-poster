@@ -14,7 +14,7 @@ const hashtags = computed({
 </script>
 
 <template>
-  <Card class="p-6 shadow-none rounded-md">
+  <Card id="tour-hashtags-card" class="p-6 shadow-none rounded-md">
     <div class="flex items-center gap-3">
       <Icon name="lucide:hash" class="w-5 h-5 text-primary" />
       <h2 class="text-lg font-semibold">3. Hashtags</h2>

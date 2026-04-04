@@ -1,0 +1,123 @@
+{
+  "config": {
+    "showProgress": true,
+    "progressText": "{{current}} / {{total}}",
+    "nextBtnText": "下一步 →",
+    "prevBtnText": "← 上一步",
+    "doneBtnText": "開始使用！",
+    "allowClose": true,
+    "overlayOpacity": 0.6,
+    "stagePadding": 6,
+    "stageRadius": 8,
+    "popoverClass": "fursuit-tour-popover"
+  },
+  "steps": [
+    {
+      "popover": {
+        "title": "👋 歡迎使用 FursuitFriday 發文神器！",
+        "description": "這個工具幫助你快速生成 Fursuit Friday 貼文說明文字，支援多個社群平台格式。<br><br>讓我們用 1 分鐘快速了解所有功能吧！",
+        "side": "over",
+        "align": "center"
+      }
+    },
+    {
+      "element": "#tour-ai-card",
+      "popover": {
+        "title": "✨ 第一步：AI 文案生成",
+        "description": "這是主要的 AI 生成區塊。上傳你的獸裝照片，讓 AI 自動幫你撰寫貼文草稿，省去想文案的時間！",
+        "side": "right",
+        "align": "start"
+      }
+    },
+    {
+      "element": "#tour-image-upload",
+      "popover": {
+        "title": "🖼️ 上傳照片",
+        "description": "點擊這個區塊或拖曳圖片檔案來上傳你的獸裝照片。AI 會根據照片內容自動生成對應的文案。",
+        "side": "bottom",
+        "align": "start"
+      }
+    },
+    {
+      "element": "#tour-style-badges",
+      "popover": {
+        "title": "🎨 選擇文案風格",
+        "description": "點選標籤來套用預設的風格提示詞。例如：輕鬆日常、興奮分享等。可以前往「設定 → 提示詞風格」自行新增風格。",
+        "side": "bottom",
+        "align": "start"
+      }
+    },
+    {
+      "element": "#tour-generate-btn",
+      "popover": {
+        "title": "🚀 讓 AI 生成草稿",
+        "description": "上傳圖片並選好風格後，點擊這個按鈕，AI 就會根據圖片和風格生成一段貼文草稿。<br><br>首次使用前請先至「設定 → API 金鑰」設定好 AI 服務。",
+        "side": "top",
+        "align": "start"
+      }
+    },
+    {
+      "element": "#tour-main-text",
+      "popover": {
+        "title": "✏️ 編輯草稿",
+        "description": "AI 生成後，草稿會出現在這裡。你可以直接在這裡修改、補充內容，直到滿意為止。當然也可以完全手動輸入，不一定要用 AI 生成。",
+        "side": "top",
+        "align": "start"
+      }
+    },
+    {
+      "element": "#tour-tag-card",
+      "popover": {
+        "title": "👥 第二步：標記夥伴",
+        "description": "在這裡新增本篇貼文要標記的夥伴，例如攝影師、毛裝工作室、同框朋友等。<br><br>每位夥伴可以設定不同平台的帳號，系統會自動依照平台格式生成對應的標記。",
+        "side": "right",
+        "align": "start"
+      }
+    },
+    {
+      "element": "#tour-hashtags-card",
+      "popover": {
+        "title": "#️⃣ 第三步：Hashtags",
+        "description": "在這裡設定每篇貼文固定附上的 Hashtag。你可以根據你的需求自由修改。",
+        "side": "top",
+        "align": "start"
+      }
+    },
+    {
+      "element": "#tour-preview-card",
+      "popover": {
+        "title": "👁️ 即時預覽",
+        "description": "預覽區會即時顯示最終貼文的完整格式，包含內文、夥伴標記和 Hashtag，所見即所得。",
+        "side": "left",
+        "align": "start"
+      }
+    },
+    {
+      "element": "#tour-platform-tabs",
+      "popover": {
+        "title": "🌐 切換平台格式",
+        "description": "不同社群平台（Twitter、Instagram、Bluesky、Threads、Plurk）的標記格式不同。點擊平台標籤可即時切換預覽格式，右下角的複製按鈕也會對應更新。",
+        "side": "bottom",
+        "align": "center"
+      }
+    },
+    {
+      "element": "#tour-copy-btn",
+      "popover": {
+        "title": "📋 複製並發文！",
+        "description": "確認預覽內容後，點擊這個按鈕即可將對應平台的格式複製到剪貼簿，直接貼到社群平台發文！<br><br>旁邊的下拉箭頭可切換要複製的平台格式。",
+        "side": "top",
+        "align": "start"
+      }
+    },
+    {
+      "element": "#tour-settings-link",
+      "popover": {
+        "title": "⚙️ 設定頁面",
+        "description": "首次使用請先到設定頁面完成以下設定：<br><br>• <strong>API 金鑰</strong>：設定 Gemini、OpenAI 或 Claude 的金鑰<br>• <strong>通訊錄</strong>：預先儲存常合作的夥伴資料<br>• <strong>角色定位</strong>：自訂角色類型（攝影、夥伴等）<br>• <strong>提示詞風格</strong>：新增自訂 AI 風格模板",
+        "side": "bottom",
+        "align": "end"
+      }
+    }
+  ]
+}

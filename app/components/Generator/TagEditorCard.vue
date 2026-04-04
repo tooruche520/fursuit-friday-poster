@@ -127,7 +127,7 @@ const createNewTag = () => {
 </script>
 
 <template>
-  <Card class="p-6 shadow-none rounded-md">
+  <Card id="tour-tag-card" class="p-6 shadow-none rounded-md">
     <div class="flex items-center justify-between">
       <div class="flex items-center gap-3">
         <Icon name="lucide:users" class="w-5 h-5 text-primary" />

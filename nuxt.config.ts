@@ -41,5 +41,7 @@ export default defineNuxtConfig({
 
   colorMode: {
     classSuffix: ''
-  }
+  },
+
+  css: ['driver.js/dist/driver.css'],
 })
