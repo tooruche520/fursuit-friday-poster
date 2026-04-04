@@ -64,7 +64,7 @@ const finalText = computed(() => {
 
     const roleDefinition = roles.value.find((item) => item.id === roleId)
     const displayName = partnerLabel || roleDefinition?.displayName || roleId
-    result += `${displayName}：${handles}\n`
+    result += `${displayName}: ${handles}\n`
   })
 
   result += '\n' + props.hashtags

@@ -3,10 +3,10 @@ import type { RoleDefinition } from '~/types'
 export function useRoles() {
   // 預設角色定位（初始值）
   const defaultRoles: RoleDefinition[] = [
-    { id: 'photography', name: '攝影', displayName: '攝影', icon: 'lucide:camera' },
-    { id: 'fursuit-maker', name: '毛裝工作室', displayName: '毛裝工作室', icon: 'lucide:scissors' },
-    { id: 'partner', name: '搭檔', displayName: '搭檔', icon: 'lucide:paw-print' },
-    { id: 'special-thanks', name: '特別感謝', displayName: '特別感謝', icon: 'lucide:heart' },
+    { id: 'photography', name: '攝影', displayName: '📷', icon: 'lucide:camera' },
+    { id: 'fursuit-maker', name: '毛裝工作室', displayName: '🪡', icon: 'lucide:scissors' },
+    { id: 'partner', name: '搭檔', displayName: '🐾', icon: 'lucide:paw-print' },
+    { id: 'special-thanks', name: '特別感謝', displayName: '❤️', icon: 'lucide:heart' },
   ]
 
   // 自訂角色（儲存在 localStorage）
