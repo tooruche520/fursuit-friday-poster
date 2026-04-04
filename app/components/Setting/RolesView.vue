@@ -105,10 +105,9 @@ watch(isEditorOpen, (newValue) => {
 
 <template>
   <div class="max-w-5xl mx-auto space-y-6 animate-in fade-in duration-300">
-    <div class="flex items-center justify-between">
+    <div class="flex items-center justify-between flex-wrap gap-4 mt-4">
       <div>
         <h2 class="text-2xl font-bold text-foreground flex items-center gap-2">
-          <Icon name="lucide:tag" class="w-6 h-6 text-primary" />
           角色定位管理
         </h2>
         <p class="text-muted-foreground mt-1">
@@ -121,8 +120,8 @@ watch(isEditorOpen, (newValue) => {
       </Button>
     </div>
 
-    <div class="border rounded-md bg-background">
-      <div class="overflow-x-auto">
+    <div class="grid col-1">
+      <div class="border rounded-md bg-background overflow-x-auto">
         <Table>
           <TableHeader>
             <TableRow>

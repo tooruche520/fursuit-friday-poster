@@ -57,14 +57,13 @@ const createNew = () => {
 
 <template>
   <div class="max-w-5xl mx-auto space-y-6 animate-in fade-in duration-300">
-    <div class="flex items-center justify-between">
+    <div class="flex items-center justify-between flex-wrap gap-4 mt-4">
       <div>
         <h2 class="text-2xl font-bold text-foreground flex items-center gap-2">
-          <Icon name="lucide:book" class="w-6 h-6 text-primary" />
           通訊錄管理
         </h2>
         <p class="text-muted-foreground mt-1">
-          集中管理常合作的夥伴,發文時可一鍵快速帶入所有跨平台帳號。
+          集中管理常合作的夥伴，發文時可一鍵快速帶入所有跨平台帳號。
         </p>
       </div>
       <Button class="gap-2 bg-primary text-primary-foreground hover:bg-primary/90" @click="createNew">
@@ -73,8 +72,8 @@ const createNew = () => {
       </Button>
     </div>
 
-    <div class="border rounded-md bg-background">
-      <div class="overflow-x-auto">
+    <div class="grid col-1">
+      <div class="border rounded-md bg-background overflow-x-auto">
         <Table>
           <TableHeader>
             <TableRow>
@@ -104,7 +103,7 @@ const createNew = () => {
                     <Icon :name="getRole(contact.defaultRoleId)!.icon" class="w-3 h-3" />
                     {{ getRole(contact.defaultRoleId)!.name }}
                   </Badge>
-
+  
                 </div>
               </TableCell>
               

@@ -1,49 +1,43 @@
 <script setup lang="ts">
 import { useSidebar } from '@/components/ui/sidebar'
-const { setOpenMobile } = useSidebar()
+import { useBreakpoints, breakpointsTailwind } from '@vueuse/core'
 
-const tabValue = ref("contacts");
+const { setOpenMobile } = useSidebar()
+const { activeTab, tabs, navigate } = useSettingTabs()
+
+const breakpoints = useBreakpoints(breakpointsTailwind)
+const isMd = breakpoints.greaterOrEqual('md')
+
+// setup 期間同步執行，首次渲染前就設定好正確頁面
+if (isMd.value) {
+  navigate('contacts')
+}
 
 const onMenuButtonClick = (value: string) => {
-  tabValue.value = value;
-  setOpenMobile(false); // 關閉手機端的側邊欄
+  navigate(value);
+  setOpenMobile(false);
 };
 </script>
 
 <template>
-  <Tabs default-value="generator" v-model="tabValue" class="w-full">
+  <Tabs v-model="activeTab" class="w-full">
     <div class="w-full">
       <HeaderSetting />
 
       <div class="flex flex-1">
-        <Sidebar class="mt-12 h-[calc(100vh-3rem)] shrink-0 bg-background" :default-open="true" >
+        <Sidebar 
+          class="mt-12 h-[calc(100vh-3rem)] shrink-0 bg-background" 
+          :default-open="isMd"
+        >
           <SidebarContent>
             <SidebarGroup>
               <SidebarGroupLabel>設定</SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton @click="onMenuButtonClick('styles')" :is-active="tabValue === 'styles'">
-                      <Icon name="lucide:palette" />
-                      提示詞風格
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton @click="onMenuButtonClick('contacts')" :is-active="tabValue === 'contacts'">
-                      <Icon name="lucide:users" />
-                      通訊錄
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton @click="onMenuButtonClick('roles')" :is-active="tabValue === 'roles'">
-                      <Icon name="lucide:tag" />
-                      角色定位
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton @click="onMenuButtonClick('apikeys')" :is-active="tabValue === 'apikeys'">
-                      <Icon name="lucide:key" />
-                      API 金鑰
+                  <SidebarMenuItem v-for="tab in tabs" :key="tab.value">
+                    <SidebarMenuButton @click="onMenuButtonClick(tab.value)" :is-active="activeTab === tab.value">
+                      <Icon :name="tab.icon" />
+                      {{ tab.label }}
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 </SidebarMenu>
@@ -56,7 +50,10 @@ const onMenuButtonClick = (value: string) => {
         </Sidebar>
 
         <div class="flex flex-1">
-          <main class="px-4 mt-4 w-full">
+          <main class="px-4 my-4 w-full">
+            <TabsContent value="setting-home">
+              <SettingHomeView />
+            </TabsContent>
             <TabsContent value="contacts">
               <SettingContactsView />
             </TabsContent>

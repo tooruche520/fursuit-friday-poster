@@ -72,14 +72,13 @@ const createNew = () => {
 
 <template>
   <div class="max-w-5xl mx-auto space-y-6 animate-in fade-in duration-300">
-    <div class="flex items-center justify-between">
+    <div class="flex items-center justify-between flex-wrap gap-4 mt-4">
       <div>
         <h2 class="text-2xl font-bold text-foreground flex items-center gap-2">
-          <Icon name="lucide:palette" class="w-6 h-6 text-primary" />
           風格提示詞管理
         </h2>
         <p class="text-muted-foreground mt-1">
-          管理 AI 文案生成的風格提示詞,自訂專屬的創作風格。
+          管理 AI 文案生成的風格提示詞，自訂專屬的創作風格。
         </p>
       </div>
       <Button class="gap-2 bg-primary text-primary-foreground hover:bg-primary/90" @click="createNew">
@@ -88,8 +87,8 @@ const createNew = () => {
       </Button>
     </div>
 
-    <div class="border rounded-md bg-background">
-      <div class="overflow-x-auto">
+    <div class="grid col-1">
+      <div class="border rounded-md bg-background overflow-x-auto">
         <Table>
           <TableHeader>
             <TableRow>
@@ -119,7 +118,7 @@ const createNew = () => {
               </TableCell>
               
               <TableCell>
-                <div class="text-sm text-muted-foreground truncate max-w-md">
+                <div class="text-sm text-muted-foreground truncate max-w-60 sm:max-w-md">
                   {{ style.prompt }}
                 </div>
               </TableCell>

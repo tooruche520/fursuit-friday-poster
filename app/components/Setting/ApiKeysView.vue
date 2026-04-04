@@ -135,10 +135,12 @@ const maskApiKey = (key: string): string => {
 <template>
   <div class="max-w-5xl mx-auto space-y-6 animate-in fade-in duration-300">
     <!-- 標題區 -->
-    <div class="flex items-center justify-between">
+    <div class="flex items-center justify-between flex-wrap gap-4 mt-4">
       <div>
-        <h1 class="text-2xl font-bold text-foreground">API 金鑰管理</h1>
-        <p class="text-sm text-muted-foreground mt-1">
+        <h2 class="text-2xl font-bold text-foreground flex items-center gap-2">
+          API 金鑰管理
+        </h2>
+        <p class="text-muted-foreground mt-1">
           管理各種 AI 服務的 API Keys，確保服務正常運作
         </p>
       </div>

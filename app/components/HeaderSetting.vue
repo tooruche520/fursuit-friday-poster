@@ -1,7 +1,22 @@
 <script setup lang="ts">
 import { useSidebar } from "@/components/ui/sidebar";
+import { useBreakpoints, breakpointsTailwind } from '@vueuse/core'
 import ModeToggle from './ModeToggle.vue'
+
 const { toggleSidebar } = useSidebar();
+const { activeTab, navigate } = useSettingTabs();
+
+const breakpoints = useBreakpoints(breakpointsTailwind)
+const isMd = breakpoints.greaterOrEqual('md')
+
+// 回上一頁
+const goBack = async () => {
+  if (activeTab.value !== 'setting-home' && !isMd.value) {
+    navigate('setting-home');
+  } else {
+    await navigateTo('/')
+  }
+};
 </script>
 
 <template>
@@ -14,11 +29,9 @@ const { toggleSidebar } = useSidebar();
           variant="ghost"
           size="icon"
           class="-ml-2"
-          asChild
+          @click="goBack"
         >
-          <NuxtLink to="/">
-            <Icon name="lucide:arrow-left" />
-          </NuxtLink>
+          <Icon name="lucide:arrow-left" />
         </Button>
 
         <!-- 開啟關閉菜單 -->
