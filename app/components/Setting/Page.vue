@@ -26,7 +26,7 @@ const onMenuButtonClick = (value: string) => {
 
       <div class="flex flex-1">
         <Sidebar 
-          class="mt-12 h-[calc(100vh-3rem)] shrink-0 bg-background" 
+          class="mt-16 h-[calc(100vh-4rem)] shrink-0 bg-background" 
           :default-open="isMd"
         >
           <SidebarContent>

@@ -97,7 +97,7 @@ const createNew = () => {
               class="hover:bg-accent/50 transition-colors"
             >
               <TableCell class="pl-3">
-                <div class="flex items-center gap-2">
+                <div class="flex items-center flex-wrap gap-2">
                   <div class="font-medium text-foreground text-base">{{ contact.name }}</div>
                   <Badge v-if="getRole(contact.defaultRoleId)" variant="secondary">
                     <Icon :name="getRole(contact.defaultRoleId)!.icon" class="w-3 h-3" />

@@ -7,7 +7,7 @@ const { startTour } = useTour()
 <template>
   <header class="bg-background border-b sticky top-0 z-40">
     <div
-      class="max-w-7xl mx-auto px-4 h-12 flex items-center justify-between"
+      class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between"
     >
     <NuxtLink to="/" class="flex items-center gap-2">
       <h1
@@ -27,16 +27,16 @@ const { startTour } = useTour()
           title="功能導覽"
           @click="startTour"
         >
-          <Icon name="lucide:circle-help" class="h-[1.2rem] w-[1.2rem]" />
+          <Icon name="lucide:circle-help" :size="16" />
         </Button>
         <Button variant="ghost" size="icon" asChild>
           <NuxtLink to="https://github.com/tooruche520/fursuit-friday-poster" class="text-foreground">
-            <Icon name="lucide:github" class="h-[1.2rem] w-[1.2rem]" />
+            <Icon name="lucide:github" :size="16" />
           </NuxtLink>
         </Button>
         <Button id="tour-settings-link" variant="ghost" size="icon" asChild>
           <NuxtLink to="/setting" class="text-foreground">
-            <Icon name="lucide:settings" class="h-[1.2rem] w-[1.2rem]" />
+            <Icon name="lucide:settings" :size="16" />
           </NuxtLink>
         </Button>
 

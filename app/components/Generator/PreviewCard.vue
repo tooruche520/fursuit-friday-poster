@@ -94,14 +94,14 @@ const handleCopy = async () => {
     <Card class="overflow-hidden shadow-none rounded-md pt-0 gap-0">
       <CardContent class="p-2">
         <Tabs v-model="activePlatformModel" class="w-full gap-0">
-          <TabsList id="tour-platform-tabs" class="w-full bg-background dark:bg-card grid grid-cols-5">
+          <TabsList id="tour-platform-tabs" class="h-12 w-full bg-background dark:bg-card grid grid-cols-5">
             <TabsTrigger
               v-for="platform in builtInPlatforms.slice(0, 5)"
               :key="platform.id"
               :value="platform.id"
               class="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground dark:data-[state=active]:bg-primary dark:data-[state=active]:text-primary-foreground rounded flex items-center justify-center gap-1 text-xs transition"
             >
-              <Icon :name="platform.icon" class="w-4 h-4" />
+              <Icon :name="platform.icon" :size="16"/>
               <span class="hidden sm:inline">{{ platform.name }}</span>
             </TabsTrigger>
           </TabsList>

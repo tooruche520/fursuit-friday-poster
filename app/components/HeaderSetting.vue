@@ -21,7 +21,7 @@ const goBack = async () => {
 
 <template>
   <header class="bg-background border-b sticky top-0 z-40">
-    <div class="mx-auto px-4 h-12 flex items-center justify-between">
+    <div class="mx-auto px-4 h-16 flex items-center justify-between">
       <!-- 右側選單 -->
       <div class="flex items-center justify-around">
         <!-- 回上一頁 -->
@@ -31,7 +31,7 @@ const goBack = async () => {
           class="-ml-2"
           @click="goBack"
         >
-          <Icon name="lucide:arrow-left" />
+          <Icon name="lucide:arrow-left" :size="16"/>
         </Button>
 
         <!-- 開啟關閉菜單 -->
@@ -41,10 +41,10 @@ const goBack = async () => {
           class=""
           @click="toggleSidebar"
         >
-          <Icon name="lucide:menu" />
+          <Icon name="lucide:menu" :size="16"/>
         </Button>
 
-        <h1 class="font-bold text-foreground ml-3">設定</h1>
+        <h1 class="text-lg font-bold text-foreground ml-3">設定</h1>
 
       </div>
 
