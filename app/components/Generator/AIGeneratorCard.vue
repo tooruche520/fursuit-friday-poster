@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { toast } from 'vue-sonner'
+import type { AIProvider } from '~/composables/useAI'
 
 const props = defineProps<{
   modelValue: string
@@ -9,7 +10,7 @@ const emit = defineEmits<{
   'update:modelValue': [value: string]
 }>()
 
-const { generateCaption } = useGemini()
+const { generateCaption, activeProvider, availableProviders, setActiveProvider } = useAI()
 const { styles } = useStyles()
 
 const mainText = computed({
@@ -24,6 +25,13 @@ const imageFile = ref<File | null>(null)
 const imagePreview = ref('')
 const imageUploaded = ref(false)
 const isGenerating = ref(false)
+
+const providerLabels: Record<AIProvider, string> = {
+  gemini: 'Gemini',
+  openai: 'OpenAI',
+  anthropic: 'Claude',
+  custom: 'Custom',
+}
 
 const handleImageUpload = async (event: Event) => {
   const input = event.target as HTMLInputElement
@@ -50,7 +58,6 @@ const handleImageUpload = async (event: Event) => {
 
 const getSelectedStylePrompt = (): string | undefined => {
   if (!selectedStyle.value) return undefined
-
   const style = styles.value.find((item) => item.id === selectedStyle.value)
   return style?.prompt
 }
@@ -58,6 +65,11 @@ const getSelectedStylePrompt = (): string | undefined => {
 const handleGenerateAI = async () => {
   if (!imageFile.value) {
     toast.error('請先上傳圖片')
+    return
+  }
+
+  if (availableProviders.value.length === 0) {
+    toast.error('請先前往「設定 > API 金鑰」設定並啟用至少一個 AI 服務')
     return
   }
 
@@ -70,8 +82,8 @@ const handleGenerateAI = async () => {
         const result = loadEvent.target?.result as string
         resolve(result.split(',')[1] || '')
       }
+      reader.readAsDataURL(imageFile.value!)
     })
-    reader.readAsDataURL(imageFile.value)
 
     const result = await generateCaption({
       stylePrompt: getSelectedStylePrompt(),
@@ -200,6 +212,22 @@ const handleGenerateAI = async () => {
           placeholder="例如：這張照片是在戶外拍攝的、獸裝上有特殊配件、想要強調的重點等..."
           class="min-h-20 resize-y text-sm animate-in fade-in slide-in-from-top-2 duration-200"
         />
+      </div>
+
+      <!-- AI 提供者選擇 -->
+      <div v-if="availableProviders.length > 1" class="flex items-center gap-2">
+        <span class="text-sm text-muted-foreground shrink-0">使用：</span>
+        <div class="flex flex-wrap gap-1.5">
+          <Badge
+            v-for="p in availableProviders"
+            :key="p.id"
+            :variant="activeProvider === p.provider ? 'default' : 'outline'"
+            class="cursor-pointer transition-colors"
+            @click="setActiveProvider(p.provider)"
+          >
+            {{ providerLabels[p.provider] ?? p.name }}
+          </Badge>
+        </div>
       </div>
 
       <Button

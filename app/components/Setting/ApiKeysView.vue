@@ -54,15 +54,41 @@ const saveApiKey = (config: ApiKeyConfig) => {
   toast.success(`${config.name} API Key 已更新`);
 };
 
-// 測試 API Key（未來可擴充實際測試功能）
+// 測試 API Key
+const testingKey = ref<string | null>(null);
+
 const testApiKey = async (config: ApiKeyConfig) => {
   if (!config.key.trim()) {
-    toast.error("請先輸入 API Key");
+    toast.error("請先輸入並儲存 API Key");
     return;
   }
 
-  toast.info("API Key 測試功能開發中...");
-  // 未來可以實作實際的 API 測試
+  testingKey.value = config.id;
+  try {
+    let result: { success: boolean; error?: string };
+
+    if (config.provider === "gemini") {
+      const { testConnection } = useGemini();
+      result = await testConnection();
+    } else if (config.provider === "openai") {
+      const { testConnection } = useOpenAI();
+      result = await testConnection();
+    } else if (config.provider === "anthropic") {
+      const { testConnection } = useAnthropic();
+      result = await testConnection();
+    } else {
+      toast.info("自訂 API 無法自動測試");
+      return;
+    }
+
+    if (result.success) {
+      toast.success(`${config.name} 連線測試成功！`);
+    } else {
+      toast.error(`連線失敗：${result.error}`);
+    }
+  } finally {
+    testingKey.value = null;
+  }
 };
 
 // 複製 API Key
@@ -213,10 +239,15 @@ const maskApiKey = (key: string): string => {
                 variant="outline"
                 size="sm"
                 @click="testApiKey(config)"
-                :disabled="!config.key"
+                :disabled="!config.key || testingKey === config.id"
               >
-                <Icon name="lucide:test-tube" class="w-4 h-4 mr-2" />
-                測試連線
+                <Icon
+                  v-if="testingKey === config.id"
+                  name="lucide:loader-circle"
+                  class="w-4 h-4 mr-2 animate-spin"
+                />
+                <Icon v-else name="lucide:test-tube" class="w-4 h-4 mr-2" />
+                {{ testingKey === config.id ? "測試中..." : "測試連線" }}
               </Button>
             </div>
             <div class="flex items-center gap-2">
@@ -267,7 +298,7 @@ const maskApiKey = (key: string): string => {
                   class="underline hover:text-primary"
                   >OpenAI Platform</a
                 >
-                申請（未來支援）
+                申請
               </li>
               <li>
                 <strong>Anthropic:</strong> 前往
@@ -277,7 +308,7 @@ const maskApiKey = (key: string): string => {
                   class="underline hover:text-primary"
                   >Anthropic Console</a
                 >
-                申請（未來支援）
+                申請
               </li>
             </ul>
             <p class="text-sm text-muted-foreground mt-3">

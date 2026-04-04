@@ -67,7 +67,22 @@ export function useGemini() {
     }
   }
 
+  const testConnection = async (): Promise<{ success: boolean; error?: string }> => {
+    try {
+      const apiKey = getApiKey('gemini') || (config.public.geminiApiKey as string)
+      if (!apiKey) throw new Error('Gemini API Key 未設定')
+
+      const genAI = new GoogleGenerativeAI(apiKey)
+      const model = genAI.getGenerativeModel({ model: 'gemini-3-flash-preview' })
+      await model.generateContent('hi')
+      return { success: true }
+    } catch (error) {
+      return { success: false, error: (error as Error).message }
+    }
+  }
+
   return {
-    generateCaption
+    generateCaption,
+    testConnection,
   }
 }
