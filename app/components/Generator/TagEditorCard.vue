@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import draggable from 'vuedraggable'
 import type { Tag } from '~/types'
 import { toast } from 'vue-sonner'
 
@@ -25,8 +26,6 @@ const tags = computed({
 })
 
 const editingTag = ref<Tag | null>(null)
-const dragItem = ref<number | null>(null)
-const dragOverItem = ref<number | null>(null)
 
 const createId = () => {
   if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) {
@@ -37,21 +36,6 @@ const createId = () => {
 }
 
 const cloneTag = (tag: Tag): Tag => JSON.parse(JSON.stringify(tag))
-
-const handleDragSort = () => {
-  if (dragItem.value === null || dragOverItem.value === null) return
-
-  const sortedTags = [...tags.value]
-  const currentTag = sortedTags[dragItem.value]
-  if (!currentTag) return
-
-  sortedTags.splice(dragItem.value, 1)
-  sortedTags.splice(dragOverItem.value, 0, currentTag)
-  tags.value = sortedTags
-
-  dragItem.value = null
-  dragOverItem.value = null
-}
 
 const saveTag = () => {
   if (!editingTag.value) return
@@ -152,64 +136,66 @@ const createNewTag = () => {
         尚無綁定任何夥伴
       </div>
 
-      <div
-        v-for="(tag, index) in tags"
-        :key="tag.id"
-        draggable="true"
-        class="flex items-center justify-between p-3 bg-background dark:bg-input/30 border rounded-md shadow-sm group hover:bg-accent/50 dark:hover:bg-input/50 transition-colors cursor-move"
-        @dragstart="dragItem = index"
-        @dragenter="dragOverItem = index"
-        @dragend="handleDragSort"
-        @dragover.prevent
+      <draggable
+        v-model="tags"
+        item-key="id"
+        handle=".drag-handle"
+        :animation="150"
       >
-        <div class="flex items-center gap-3 overflow-hidden">
-          <Icon name="lucide:grip-vertical" class="w-4 h-4 shrink-0" />
-          <span
-            class="bg-card text-foreground text-xs px-2 py-1 rounded border border-accent whitespace-nowrap flex items-center gap-1"
+        <template #item="{ element: tag }: { element: Tag }">
+          <div
+            class="flex items-center justify-between p-3 bg-background dark:bg-input/30 border rounded-md shadow-sm group hover:bg-accent/50 dark:hover:bg-input/50 transition-colors mb-2"
           >
-            <span v-if="tag.roleId === 'partner'"> 
-              {{ tag.partnerLabel }}
-            </span>
-            <Icon v-else :name="getRole(tag.roleId)?.icon" />
-            {{ getRole(tag.roleId)?.name }}
-          </span>
-          <span class="font-medium text-foreground truncate">
-            {{ tag.name || '未命名夥伴' }}
-          </span>
-          <div class="flex items-center gap-2 ml-2">
-            <Icon
-              v-for="platform in tag.platforms.filter((item) => item.handle)"
-              :key="platform.id"
-              :name="getPlatform(platform.type).icon"
-              class="w-3.5 h-3.5 text-foreground"
-            />
+            <div class="flex items-center gap-2 overflow-hidden">
+              <Icon name="lucide:grip-vertical" class="drag-handle shrink-0 cursor-move touch-none" :size="20" />
+              <span
+                class="bg-card text-foreground text-xs px-2 py-1 rounded border border-accent whitespace-nowrap flex items-center gap-1"
+              >
+                <span v-if="tag.roleId === 'partner'">
+                  {{ tag.partnerLabel }}
+                </span>
+                <Icon v-else :name="getRole(tag.roleId)?.icon" />
+                {{ getRole(tag.roleId)?.name }}
+              </span>
+              <span class="font-medium text-foreground truncate">
+                {{ tag.name || '未命名夥伴' }}
+              </span>
+              <div class="flex items-center gap-2 ml-2">
+                <Icon
+                  v-for="platform in tag.platforms.filter((item) => item.handle)"
+                  :key="platform.id"
+                  :name="getPlatform(platform.type).icon"
+                  class="w-3.5 h-3.5 text-foreground"
+                />
+              </div>
+            </div>
+            <div class="flex items-center opacity-100">
+              <Button
+                variant="ghost"
+                size="sm"
+                class="h-8 w-8 p-0"
+                @click="startEditTag(tag)"
+              >
+                <Icon name="lucide:edit-2" class="w-4 h-4" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                class="h-8 w-8 p-0 text-destructive hover:bg-destructive/10 hover:text-destructive"
+                @click="removeTag(tag.id)"
+              >
+                <Icon name="lucide:trash-2" class="w-4 h-4" />
+              </Button>
+            </div>
           </div>
-        </div>
-        <div class="flex items-center opacity-100">
-          <Button
-            variant="ghost"
-            size="sm"
-            class="h-8 w-8 p-0"
-            @click="startEditTag(tag)"
-          >
-            <Icon name="lucide:edit-2" class="w-4 h-4" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            class="h-8 w-8 p-0 text-destructive hover:bg-destructive/10 hover:text-destructive"
-            @click="removeTag(tag.id)"
-          >
-            <Icon name="lucide:trash-2" class="w-4 h-4" />
-          </Button>
-        </div>
-      </div>
+        </template>
+      </draggable>
 
       <p
         v-if="tags.length > 1"
         class="text-xs text-slate-400 text-center mt-3 pt-2"
       >
-        💡 提示:按住項目可以拖曳自訂順序,相同定位的夥伴會自動合併於同一行
+        💡 提示：按住項目可以拖曳自訂順序，相同定位的夥伴會自動合併於同一行
       </p>
     </div>
   </Card>
