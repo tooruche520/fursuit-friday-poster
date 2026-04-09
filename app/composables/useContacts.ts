@@ -1,4 +1,7 @@
 import type { Contact } from '~/types'
+import defaultContactsData from '~/data/defaultContacts.json'
+
+const defaultContacts = defaultContactsData as Contact[]
 
 type ContactStorageRecord = Omit<Contact, 'defaultRoleId'> & {
   defaultRoleId?: string
@@ -7,7 +10,7 @@ type ContactStorageRecord = Omit<Contact, 'defaultRoleId'> & {
 }
 
 export function useContacts() {
-  const contacts = useLocalStorage<Contact[]>('fursuit-friday-contacts', [])
+  const contacts = useLocalStorage<Contact[]>('fursuit-friday-contacts', defaultContacts)
   const { roles } = useRoles()
 
   // 一次性 migration：舊版 role（顯示名稱字串）→ 新版 defaultRoleId（角色 ID）

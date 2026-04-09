@@ -1,0 +1,38 @@
+[
+  {
+    "id": "bb5znxquq",
+    "name": "晴海徹",
+    "defaultRoleId": "photography",
+    "platforms": [
+      {
+        "id": "ah5k2r2zo",
+        "type": "twitter",
+        "handle": "@tooruche"
+      },
+      {
+        "id": "x8tt1tmvk",
+        "type": "plurk",
+        "handle": "@tooruche520",
+        "customName": ""
+      },
+      {
+        "id": "o49vdcl3r",
+        "type": "facebook",
+        "handle": "@tooruche",
+        "customName": ""
+      },
+      {
+        "id": "2eq6ms0dg",
+        "type": "bsky",
+        "handle": "@tooruche.bsky.social",
+        "customName": ""
+      },
+      {
+        "id": "00qurkf41",
+        "type": "ig",
+        "handle": "@tooruche520",
+        "customName": ""
+      }
+    ]
+  }
+]
