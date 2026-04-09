@@ -21,6 +21,7 @@ const mainText = computed({
 const selectedStyle = ref<string | null>(null)
 const additionalPrompt = ref('')
 const showAdditionalPrompt = ref(false)
+const isStyleDialogOpen = ref(false)
 const imageFile = ref<File | null>(null)
 const imagePreview = ref('')
 const imageUploaded = ref(false)
@@ -179,16 +180,17 @@ const handleGenerateAI = async () => {
         <Badge
           variant="outline"
           class="cursor-pointer border-dashed hover:bg-primary/10 transition-colors"
-          @click="
-            toast('請前往「風格管理」頁面新增自定義風格', {
-              description: '點擊上方頁籤切換到風格管理',
-            })
-          "
+          @click="isStyleDialogOpen = true"
         >
           <Icon name="lucide:plus" class="w-3 h-3" />
           自定義
         </Badge>
       </div>
+
+      <StyleEditDialog
+        v-model:open="isStyleDialogOpen"
+        @saved="(style) => selectedStyle = style.id"
+      />
 
       <div class="space-y-2">
         <Button
