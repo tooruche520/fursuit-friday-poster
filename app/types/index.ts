@@ -34,6 +34,17 @@ export interface RoleDefinition {
   icon: string
 }
 
+export interface ContactImportPayload {
+  name: string
+  defaultRoleId: string
+  partnerDisplay?: string
+  platforms: Array<{
+    type: Platform['type']
+    handle: string
+    customName?: string
+  }>
+}
+
 export interface ApiKeyConfig {
   id: string
   provider: 'gemini' | 'openai' | 'anthropic' | 'custom'
