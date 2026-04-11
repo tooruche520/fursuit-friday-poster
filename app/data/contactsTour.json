@@ -1,0 +1,61 @@
+{
+  "config": {
+    "showProgress": true,
+    "progressText": "{{current}} / {{total}}",
+    "nextBtnText": "下一步 →",
+    "prevBtnText": "← 上一步",
+    "doneBtnText": "了解！",
+    "allowClose": true,
+    "overlayOpacity": 0.6,
+    "stagePadding": 6,
+    "stageRadius": 8,
+    "popoverClass": "fursuit-tour-popover"
+  },
+  "steps": [
+    {
+      "popover": {
+        "title": "📋 通訊錄導覽",
+        "description": "讓我來介紹通訊錄的各項功能，特別是如何和夥伴<strong>互相分享聯絡資料</strong>。",
+        "side": "over",
+        "align": "center"
+      }
+    },
+    {
+      "element": "#tour-contacts-new-btn",
+      "popover": {
+        "title": "➕ 新增夥伴",
+        "description": "點此新增聯絡人，填入姓名、角色及各平台帳號。<br><br>建立後，在發文頁面搜尋夥伴姓名就能一鍵帶入所有跨平台標記。",
+        "side": "bottom",
+        "align": "end"
+      }
+    },
+    {
+      "element": "#tour-contacts-import-string",
+      "popover": {
+        "title": "📥 從字串導入",
+        "description": "收到夥伴分享的導入字串後，點這裡貼上即可快速匯入聯絡人資料。<br><br>系統會顯示<strong>預覽畫面</strong>，並自動偵測同名衝突，讓你選擇「覆蓋」或「另存新筆」。",
+        "side": "bottom",
+        "align": "end"
+      }
+    },
+    {
+      "element": "#tour-contacts-batch-copy",
+      "popover": {
+        "title": "📦 批量複製字串",
+        "description": "想把多筆聯絡人一次分享給夥伴？點此進入<strong>多選模式</strong>，勾選後產生一段文字字串。<br><br>由於字串不受 URL 長度限制，適合一次分享大量聯絡人。",
+        "side": "bottom",
+        "align": "end"
+      }
+    },
+    {
+      "element": "#tour-contacts-link-btn",
+      "requiresContacts": true,
+      "popover": {
+        "title": "🔗 單筆導入連結",
+        "description": "點擊每筆聯絡人旁的連結圖示，可複製一個帶有此聯絡人資料的 <strong>URL</strong>。<br><br>對方打開連結後，app 會自動顯示導入確認視窗，適合單筆快速分享。",
+        "side": "left",
+        "align": "center"
+      }
+    }
+  ]
+}

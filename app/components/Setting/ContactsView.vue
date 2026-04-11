@@ -118,6 +118,11 @@ const handleExportClose = () => {
 
 // ── 從字串導入 ────────────────────────────────────────────
 const isImportFromStringOpen = ref(false)
+
+// ── 導覽 ──────────────────────────────────────────────────
+const { startContactsTour, autoStartIfNew } = useContactsTour()
+
+onMounted(() => autoStartIfNew(contacts.value.length > 0))
 </script>
 
 <template>
@@ -127,6 +132,19 @@ const isImportFromStringOpen = ref(false)
       <div>
         <h2 class="text-2xl font-bold text-foreground flex items-center gap-2">
           通訊錄管理
+          <Tooltip>
+            <TooltipTrigger as-child>
+              <Button
+                variant="ghost"
+                size="icon"
+                class="w-6 h-6 text-muted-foreground hover:text-foreground"
+                @click="startContactsTour(contacts.length > 0)"
+              >
+                <Icon name="lucide:circle-help" class="w-4 h-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>功能導覽</TooltipContent>
+          </Tooltip>
         </h2>
         <p class="text-muted-foreground mt-1">
           集中管理常合作的夥伴，發文時可一鍵快速帶入所有跨平台帳號。
@@ -134,7 +152,7 @@ const isImportFromStringOpen = ref(false)
       </div>
       <div class="flex items-center gap-2 flex-wrap">
         <!-- 從字串導入（常駐） -->
-        <Button variant="outline" class="gap-2" @click="isImportFromStringOpen = true">
+        <Button id="tour-contacts-import-string" variant="outline" class="gap-2" @click="isImportFromStringOpen = true">
           <Icon name="lucide:clipboard-paste" class="w-4 h-4" />
           從字串導入
         </Button>
@@ -150,6 +168,7 @@ const isImportFromStringOpen = ref(false)
         <!-- 一般模式：批量複製 + 新增 -->
         <template v-else>
           <Button
+            id="tour-contacts-batch-copy"
             variant="outline"
             class="gap-2"
             :disabled="contacts.length === 0"
@@ -158,7 +177,7 @@ const isImportFromStringOpen = ref(false)
             <Icon name="lucide:copy" class="w-4 h-4" />
             批量複製
           </Button>
-          <Button class="gap-2 bg-primary text-primary-foreground hover:bg-primary/90" @click="createNew">
+          <Button id="tour-contacts-new-btn" class="gap-2 bg-primary text-primary-foreground hover:bg-primary/90" @click="createNew">
             <Icon name="lucide:plus" class="w-4 h-4" />
             新增夥伴
           </Button>
@@ -197,7 +216,7 @@ const isImportFromStringOpen = ref(false)
 
             <!-- 聯絡人列 -->
             <TableRow
-              v-for="contact in contacts"
+              v-for="(contact, contactIndex) in contacts"
               :key="contact.id"
               class="transition-colors"
               :class="[
@@ -250,7 +269,12 @@ const isImportFromStringOpen = ref(false)
               <TableCell v-if="!isSelecting" class="text-right">
                 <Tooltip>
                   <TooltipTrigger as-child>
-                    <Button variant="ghost" size="icon" @click="copyImportLink(contact)">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      :id="contactIndex === 0 ? 'tour-contacts-link-btn' : undefined"
+                      @click="copyImportLink(contact)"
+                    >
                       <Icon name="lucide:link" class="w-4 h-4" />
                     </Button>
                   </TooltipTrigger>
